@@ -1,29 +1,30 @@
+
+var arrayFeedbacks = [];
+
 $(document).ready(function(){
 
   var canvasWidth = 450;
   var imgUrl = "https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"; //"http://i.imgur.com/9mwuTql.jpg"
 
+  var canvasHandle = document.getElementById("canvas");
+  var designHandle = document.getElementById("imgDesign");
 
+  designHandle.onload = function() {
+    canvasHandle.width = designHandle.width;
+    canvasHandle.height = designHandle.height;
 
-  var canvas = document.getElementById("canvas");
-  canvas.width = canvasWidth;
-
-  var ctx = canvas.getContext("2d");
-
-
-  var img = new Image();
-  img.onload = function() {
-    var imgRatio = img.width / img.height;
-    var canvasHeight = parseInt(canvasWidth / imgRatio);
-
-    var canvasContainer = document.getElementById("canvasContainer");
-    canvasContainer.innerHTML = "<canvas id='canvas2' width='" + canvasWidth + "' height='" + canvasHeight + "'></canvas>";
-    var canvas = document.getElementById("canvas2");
-    var ctx = canvas.getContext("2d");
-
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    context2d = canvasHandle.getContext("2d");
+    context2d.beginPath();
+    context2d.arc(100, 75, 50, 0, 2 * Math.PI);
+    context2d.stroke();
   }
 
-  img.src = imgUrl;
+  canvasHandle.addEventListener("click", function(evt) {
+    alert(evt.clientX + ", " + evt.clientY);
 
+    arrayFeedbacks[] = {
+      x: evt.clientX,
+      y: evt.clientY
+    }
+  }, false);
 }); 
