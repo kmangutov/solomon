@@ -1,6 +1,12 @@
 
 var arrayFeedbacks = [];
 
+var deleteListener = function(id) {
+  arrayFeedbacks.splice(id, 1);
+  renderFeedbackVisuals();
+  renderFeedbackInputs();
+};
+
 $(document).ready(function(){
 
   var canvasWidth = 450;
@@ -35,6 +41,7 @@ $(document).ready(function(){
     renderFeedbackInputs();
   }, false);
 
+
   var renderFeedbackVisuals = function() {
     context2d.clearRect(0, 0, canvasHandle.width, canvasHandle.height);
     for(var i in arrayFeedbacks) {
@@ -56,16 +63,18 @@ $(document).ready(function(){
   };
 
   var renderFeedbackInputs = function() {
-    var renderFeedbackInputHtml = function(feedback) {
-      return "<li>" + feedback.id + " <textarea></textarea></li>";
+    var renderFeedbackInputHtml = function(id) {
+      return "<div class='row'><div class='small-1 columns'><h3>" + (id + 1) + "</h3></div>"
+        + "<div class='small-11 columns'><textarea rows=4 cols=25></textarea>"
+        + "<button onClick='javascript:deleteListener(" + id + ")'>Delete</button></div></div>";
     }
 
-    var innerHtml = "<ul>";
+    var innerHtml = "";
     for(var i in arrayFeedbacks) {
-      var feedback = arrayFeedbacks[i];
-      innerHtml += renderFeedbackInputHtml(feedback);
+      //var feedback = arrayFeedbacks[i];
+      innerHtml += renderFeedbackInputHtml(parseInt(i));
     }
-    innerHtml += "</ul>";
+
     inputsHandle.innerHTML = innerHtml;
   }
 }); 

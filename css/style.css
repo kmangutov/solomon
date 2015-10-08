@@ -12,3 +12,12 @@
   top: 0px;
   z-index: 1000;
 }
+
+img {
+  max-width: none !important;
+  min-width: 100% !important;
+}
+
+textarea {
+  width: 100% !important;
+}
