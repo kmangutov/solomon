@@ -6,11 +6,43 @@
   position: relative;
 }
 
+.title {
+  margin: 40px;
+}
+
 .floatingDiv {
   position: absolute;
   left: 0px;
   top: 0px;
   z-index: 1000;
+}
+
+#canvas {
+  cursor: pointer;
+}
+
+.instructionDiv {
+  margin: 40px;
+}
+
+.feedbackBox {
+  padding: 10px;
+  margin: 10px !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: #BBB;
+}
+
+.deleteButton {
+  padding: 10px;
+}
+
+.submitButton {
+  margin: 40px !important;
+}
+
+button {
+  margin: 0px !important;
 }
 
 img {
