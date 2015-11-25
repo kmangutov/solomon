@@ -7,22 +7,39 @@ var comments = [
   "I think the purple really pops and makes you look at the poster. I found myself looking for a price. Maybe the cost, if there is one could be listed in small print on the bottom left corner. I liked the font but wondered if there is a font that \"flows\" kind of like dance? This font is bold, which stands out well, but I wondered if there would be a bold font that represented dance more. I like the poster though!"    
 ];
 
+var names = [
+  "Julien",
+  "Territory_Studio",
+  "Moniker_SF",
+  "Sam",
+  "Yukai"
+];
+
 var subsentence = function(string, word_count) {
   return string.split(" ").slice(0, word_count).join(" ");
 }  
 
 var init = function() {
   for(var i = 0; i < 5; i++) {
-    $("#comment" + i).text(subsentence(comments[i], 10) + "...");
+    $("#identity" + i).text("@" + names[i] + "");
+    $("#comment" + i).text(": " + subsentence(comments[i], 10) + "...");
   }
 }
 
 var bind = function() {
   $("[id^=action]").click(function(evt) {
     var id = this.id.slice(-1);
-    $("#comment" + id).text(comments[id]);
+    $("#comment" + id).text(": " + comments[id]);
     $("#action" + id).text("");
     $("#show_more_" + id).val("1");
+  });
+
+  $("[id^=identity]").click(function(evt) {
+
+    var id = this.id.slice(-1);
+    var current = $("#feedback").val();
+    var tag = this.text;
+    $("#feedback").val(tag + " " + current);
   });
 }
 

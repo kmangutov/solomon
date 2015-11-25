@@ -41,14 +41,18 @@
   margin: 40px !important;
 }
 
+.comment_block {
+  padding: 15px 0px !important;
+}
+
 button {
   margin: 0px !important;
 }
 
-img {
+/*img {
   max-width: none !important;
   min-width: 100% !important;
-}
+}*/
 
 textarea {
   width: 100% !important;

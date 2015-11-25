@@ -40,15 +40,15 @@
   <div class="small-12 columns">
     <ul>
 
-      <li><div class="comment_block"><span id="comment0" class="comment">&nbsp;</span><a id="action0"> Show more</a></div></li>
+      <li><div class="comment_block"><a id="identity0">&nbsp;</a><span id="comment0" class="comment">&nbsp;</span><a id="action0"> Show more</a></div></li>
 
-      <li><div class="comment_block"><span id="comment1" class="comment">&nbsp;</span><a id="action1"> Show more</a></div></li>
+      <li><div class="comment_block"><a id="identity1">&nbsp;</a><span id="comment1" class="comment">&nbsp;</span><a id="action1"> Show more</a></div></li>
 
-      <li><div class="comment_block"><span id="comment2" class="comment">&nbsp;</span><a id="action2"> Show more</a></div></li>
+      <li><div class="comment_block"><a id="identity2">&nbsp;</a><span id="comment2" class="comment">&nbsp;</span><a id="action2"> Show more</a></div></li>
 
-      <li><div class="comment_block"><span id="comment3" class="comment">&nbsp;</span><a id="action3"> Show more</a></div></li>
+      <li><div class="comment_block"><a id="identity3">&nbsp;</a><span id="comment3" class="comment">&nbsp;</span><a id="action3"> Show more</a></div></li>
 
-      <li><div class="comment_block"><span id="comment4" class="comment">&nbsp;</span><a id="action4"> Show more</a></div></li>
+      <li><div class="comment_block"><a id="identity4">&nbsp;</a><span id="comment4" class="comment">&nbsp;</span><a id="action4"> Show more</a></div></li>
       
       <input type="hidden" name="show_more_0" id="show_more_0" value="0" />
       <input type="hidden" name="show_more_1" id="show_more_1" value="0" />
@@ -62,7 +62,7 @@
   <div class="small-12 medium-12 columns">
     <br>
     <b>1. What do you think of the design and how can it be improved?</b>
-    <textarea id='feedback'name="feedback" rows=10 cols=25></textarea>
+    <textarea id='feedback' name="feedback" rows=10 cols=25></textarea>
   </div>
 
 </div>
@@ -70,7 +70,7 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <!--<script src="./js/freeform_behavior.js"></script>-->
 <script type="text/javascript">
-
+  
 var comments = [
   "I like the design.  I think it is creative and edgy.  It looks like it would be advertising ballroom dancing which is what the descriptions says.  So, I would say the poster is right on.  If anything, maybe add more color.",
   "I think the design is alright but would work much better if the background was purple and the figures and word \"dance\" were black.  The poster is easy to read and clearly states the dates, times, and locations.  I would print the poster.",
@@ -79,22 +79,39 @@ var comments = [
   "I think the purple really pops and makes you look at the poster. I found myself looking for a price. Maybe the cost, if there is one could be listed in small print on the bottom left corner. I liked the font but wondered if there is a font that \"flows\" kind of like dance? This font is bold, which stands out well, but I wondered if there would be a bold font that represented dance more. I like the poster though!"    
 ];
 
+var names = [
+  "Julien",
+  "Territory_Studio",
+  "Moniker_SF",
+  "Sam",
+  "Yukai"
+];
+
 var subsentence = function(string, word_count) {
   return string.split(" ").slice(0, word_count).join(" ");
 }  
 
 var init = function() {
   for(var i = 0; i < 5; i++) {
-    $("#comment" + i).text(subsentence(comments[i], 10) + "...");
+    $("#identity" + i).text("@" + names[i] + "");
+    $("#comment" + i).text(": " + subsentence(comments[i], 10) + "...");
   }
 }
 
 var bind = function() {
   $("[id^=action]").click(function(evt) {
     var id = this.id.slice(-1);
-    $("#comment" + id).text(comments[id]);
+    $("#comment" + id).text(": " + comments[id]);
     $("#action" + id).text("");
     $("#show_more_" + id).val("1");
+  });
+ 
+  $("[id^=identity]").click(function(evt) {
+
+    var id = this.id.slice(-1);
+    var current = $("#feedback").val();
+    var tag = this.text;
+    $("#feedback").val(tag + " " + current);
   });
 }
 

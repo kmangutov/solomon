@@ -4,32 +4,10 @@ var canvasWidth = 450;
 var circleRadius = 15;
 var imgUrl = "https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"; //"http://i.imgur.com/9mwuTql.jpg"
 
-var inputsHandle;
 var canvasHandle;
 var context2d;
 
 var arrayFeedbacks = [];
-
-var deleteListener = function(id) {
-  retainFeedbacks();
-  arrayFeedbacks.splice(id, 1);
-  renderFeedbackVisuals();
-  renderFeedbackInputs();
-  reloadFeedbacks();
-};
-
-var retainFeedbacks = function() {
-  for(var i in arrayFeedbacks) {
-    var text = document.getElementById("feedback" + i).value;
-    arrayFeedbacks[i].text = text
-  }
-}
-
-var reloadFeedbacks = function() {
-  for(var i in arrayFeedbacks) {
-    document.getElementById("feedback" + i).value = arrayFeedbacks[i].text;
-  }
-}
 
 var renderFeedbackVisuals = function() {
   context2d.clearRect(0, 0, canvasHandle.width, canvasHandle.height);
@@ -50,26 +28,11 @@ var renderFeedbackVisuals = function() {
   }
 };
 
-var renderFeedbackInputs = function() {
-  var renderFeedbackInputHtml = function(id) {
-    return "<div class='row feedbackBox'><div class='small-1 columns'><h3>" + (id + 1) + "</h3></div>"
-      + "<div class='small-11 columns'><textarea id='feedback" + id + "'rows=4 cols=25></textarea>"
-      + "<button class='deleteButton' onClick='javascript:deleteListener(" + id + ")'>Delete</button></div></div>";
-  }
-  var innerHtml = "";
-  for(var i in arrayFeedbacks) {
-    innerHtml += renderFeedbackInputHtml(parseInt(i));
-  }
-  inputsHandle.innerHTML = innerHtml;
-}
-
 $(document).ready(function(){
-
 
   canvasHandle = document.getElementById("canvas");
   var designHandle = document.getElementById("imgDesign");
   var containerHandle = document.getElementById("floatingContainer");
-  inputsHandle = document.getElementById("divInputs");
 
   context2d = canvasHandle.getContext("2d");;
 
@@ -86,14 +49,11 @@ $(document).ready(function(){
       id: arrayFeedbacks.length + 1,
       x: evt.pageX - offset.left,
       y: evt.pageY - offset.top,
-      text: ""
+      text: "hello world"
     };
 
-    retainFeedbacks();
     arrayFeedbacks.push(obj);
     renderFeedbackVisuals();
-    renderFeedbackInputs();
-    reloadFeedbacks();
   }, false);
 }); 
 
