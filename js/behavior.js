@@ -17,6 +17,8 @@ var tempFeedback = {active: false};
 var renderFloatingInput = function(evt) {
   $("#floating-input").show();
   $("#floating-input").css({left: evt.pageX, top: evt.pageY + 5});
+  setTimeout(function(){$("#floating-input").focus();}, 100);
+
 }
 
 var renderFloatingDisplay = function(feedback) {
