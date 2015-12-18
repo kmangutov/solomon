@@ -1,29 +1,41 @@
 
 
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="bower_components/foundation/css/foundation.min.css">
 <link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/redpen.css">
+
+<body>
 
 
+<textarea id="floating-input">
+</textarea>
+
+<textarea id="floating-display">
+</textarea>
 
 <div class="row">
-  <div class="small-12 columns">
-    <center><h1 class="title">Design Feedback Task</h1></center>
-  </div>
-  <div class="small-6 small-centered columns">
 
-      <div class="instructionDiv">
-        <center><h2>Instructions</h2></center>
-        <ul>
-          <li>Annotate the design with feedback</li>
-          <li>To leave an annotation, click on the image</li>
-        </ul>
+  <div class="small-12 small-centered columns">
+    <div class="spacer">&nbsp;</div>
+    <div class="spacer">&nbsp;</div>
+  </div>
+
+  <div class="small-12 centered columns">
+      <div class="div-context">
+        <span class="r-title">Screen Shot 2015 blablablbal</span>
+        <p class="r-subtitle">fafafafafafafa
+fafaffaf</p>
       </div>
-
   </div>
-  <div class="small-12 medium-12 columns">
 
+  <div class="small-12 small-centered columns">
+    <div class="spacer">&nbsp;</div>
+  </div>
+
+  <div class="small-12 columns">
     <div id="floatingContainer">
-      <img id="imgDesign" src="https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg" width="450px"></img>
+      <img id="imgDesign" src="https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"></img>
       <div class="floatingDiv">
         <canvas id="canvas"></canvas>
       </div>
@@ -37,4 +49,9 @@
 </div>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
+<script src="./js/rendering.js"></script>
 <script src="./js/behavior.js"></script>
+
+
+</body>

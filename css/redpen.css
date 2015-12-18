@@ -1,0 +1,51 @@
+body {
+  background-color: #282828 !important;
+
+}
+
+.div-context {
+  width: 571px;
+  margin: auto;
+}
+
+.r-title { 
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  color: #D2D9DC;
+  font-weight: 200;
+  padding-bottom: 3px;
+
+  border-style: none none dotted none;
+  border-color: #727E82;
+  border-width: 1;
+}
+
+.r-subtitle {
+  padding-top: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16.5px !important;
+  color: #727E82;
+}
+
+.spacer {
+  margin: 25px;
+}
+
+#floating-input{
+  position: absolute;
+  left: 200px;
+  top: 200px;
+  z-index: 1200;
+  width: 230px !important;
+  height: 160px !important;
+}
+
+
+#floating-display{
+  position: absolute;
+  left: 200px;
+  top: 200px;
+  z-index: 800;
+  width: 230px !important;
+  height: 160px !important;
+}
