@@ -38,6 +38,7 @@ body {
   z-index: 1200;
   width: 230px !important;
   height: 160px !important;
+  resize: none;
 }
 
 
@@ -48,4 +49,5 @@ body {
   z-index: 800;
   width: 230px !important;
   height: 160px !important;
+  resize: none;
 }

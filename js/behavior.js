@@ -12,91 +12,89 @@ var arrayFeedbacks = [];
 var canvasOffsetX = 0;
 var canvasOffsetY = 0;
 
-var tempFeedback = {active: false};
-
 var floatingOffsetX = 10;
 var floatingOffsetY = 15;
 
-var FloatingInput = {
-  visible: false,
-  x: 0,
-  y: 0,
-  text: ""
+var tempFeedback = {active: false};
+
+function FloatingInput(id) {
+  this.visible = false;
+  this.x = 0;
+  this.y = 0;
+  this.text = "";
+
+  this.id = id;
+  this.ref = $("#" + id);
+  this.render();
+};
+FloatingInput.prototype.hide = function() {
+  this.visible = false;
+  this.render();
+};
+FloatingInput.prototype.render = function() {
+  this.visible? this.ref.show() : this.ref.hide();
+  this.ref.css({left: this.x, top: this.y});
+  this.ref.val(this.text);
+};
+FloatingInput.prototype.load = function(feedback) {
+  this.x = canvasOffsetX + feedback.x + floatingOffsetX;
+  this.y = canvasOffsetY + feedback.y + floatingOffsetY;
+  this.text = feedback.text;
+  this.visible = true;
+  this.render();
+};
+FloatingInput.prototype.focus = function() {
+  var that = this;
+  setTimeout(function() {that.ref.focus();}, 100);
 };
 
-var renderFloatingInput = function(evt) {
-  $("#floating-input").show();
-  $("#floating-input").css({left: evt.pageX + 10, top: evt.pageY + 15});
-  setTimeout(function(){$("#floating-input").focus();}, 100);
-
-}
-
-var renderFloatingDisplay = function(feedback) {
-  $("#floating-display").show();
-  var newX = canvasOffsetX + feedback.x + floatingOffsetX;
-  var newY = canvasOffsetY + feedback.y + floatingOffsetY;
-  $("#floating-display").css({left: newX, top: newY});
-  $("#floating-display").val(feedback.text);
-}
+var floatingInput;
+var floatingDisplay;
 
 var dist = function(x1, y1, x2, y2) {
   return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
-}
-
-var resetActive = function() {
-  var anyReset = false;
-  for(var i in arrayFeedbacks) {
-    var feedback = arrayFeedbacks[i];
-
-    if(feedback.active) {
-      anyReset = true;
-
-    }
-
-    feedback.active = false;
-  }
-  return anyReset;
-}
+};
 
 var checkMouseOver = function(loc) {
 
+  var anyShown = false;
   for(var i in arrayFeedbacks) {
     var feedback = arrayFeedbacks[i];
-    if(!feedback.active && dist(loc.x, loc.y, feedback.x, feedback.y) <= circleRadius) {
-      console.log("mouseoveredf one");
-
-      if(!feedback.hover) {
-        renderFloatingDisplay(feedback);
-        feedback.hover = true;
-      }
-    } else {
-      if(feedback.hover) {
-        $("#floating-display").hide();
-        feedback.hover = false;
-      }
+    if(dist(loc.x, loc.y, feedback.x, feedback.y) <= circleRadius) {
+      
+      console.log("mouseovered one");
+      floatingDisplay.load(feedback);
+      anyShown = true;
     }
+  }
+
+  if(!anyShown) {
+    floatingDisplay.hide();
   }
 }
 
 var onLeaveInput = function() {
-  var val = $("#floating-input").val();
+  var val = floatingInput.ref.val();
 
-  if(val.length > 0 && tempFeedback.active) {
-    tempFeedback.text = $("#floating-input").val();
+  if(val.length > 0) {
+    tempFeedback.text = val;
+
+    console.log("saving " + JSON.stringify(tempFeedback));
     arrayFeedbacks.push(tempFeedback);////
   }
   
   tempFeedback = {active: false};
-  $("#floating-input").val("");
-  $("#floating-input").hide();
+  floatingInput.hide();
+  renderFeedbackVisuals();
 }
 
 var doMouseDown = function(evt) {
 
+  var wasVisible = floatingInput.visible;
   onLeaveInput(); //saving text
   evt.stopPropagation();
 
-  if(!resetActive()){
+  if(!wasVisible){
 
     tempFeedback = {
       id: arrayFeedbacks.length + 1,
@@ -104,13 +102,12 @@ var doMouseDown = function(evt) {
       y: evt.pageY - canvasOffsetY,
       absX: evt.pageX,
       absY: evt.pageY,
-      text: "hello world",
-      hover: false,
-      active: true
+      text: "",
     };
    
+    floatingInput.load(tempFeedback);
+    floatingInput.focus();
     renderFeedbackVisuals();
-    renderFloatingInput(evt);
   }
 }
 
@@ -125,16 +122,52 @@ var renderFeedbackVisuals = function() {
   renderKnob(context2d, tempFeedback);//
 };
 
+var generateCode = function() {
+  return (Math.random() * 1000000 + "").substring(0, 4);
+}
+
+var finish = function(code) {
+  $("#submit").text("Thanks! Your code is: " + code);
+}
+
+var onSubmit = function(evt) {
+
+  var session = "initial-no-history";
+
+  // collecting design feedback pls no hack
+  var a = "https://api.mon";
+  var aa = "golab.com/api/1/databases/solo";
+  var b = "mon/collections/sess";
+  var c = "ion-" + session + "?ap";
+  var ca = "iKey=iILS";
+  var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
+
+  var code = generateCode();
+  
+  $.ajax( { url: a + aa + b + c + ca + d,
+      data: JSON.stringify([{design: imgUrl, code: code, vals: arrayFeedbacks}]),
+      type: "POST",
+      contentType: "application/json" } )
+  .done(function() {
+    finish(code);
+  })
+  .fail(function() {
+    finish(code);
+  });
+}
+
 $(document).ready(function(){
 
-  $("#floating-display").hide();
-  $("#floating-input").hide();
+  //$('textarea').autoResize();
+  floatingInput = new FloatingInput("floating-input");
+  floatingDisplay = new FloatingInput("floating-display");
 
   canvasHandle = document.getElementById("canvas");
   var designHandle = document.getElementById("imgDesign");
   var containerHandle = document.getElementById("floatingContainer");
+  var submitHandle = $("#submit");
 
-  context2d = canvasHandle.getContext("2d");;
+  context2d = canvasHandle.getContext("2d");
 
   $("#imgDesign").imagesLoaded(function() {
     console.log("designHandle onload width: " + designHandle.width);
@@ -142,7 +175,9 @@ $(document).ready(function(){
     canvasHandle.height = designHandle.height;
   });
 
-
+  submitHandle.click(function(evt) {
+    onSubmit(evt);
+  });
 
   canvas.addEventListener("mousemove", function(evt) {
     
