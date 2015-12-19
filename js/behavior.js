@@ -14,17 +14,27 @@ var canvasOffsetY = 0;
 
 var tempFeedback = {active: false};
 
+var floatingOffsetX = 10;
+var floatingOffsetY = 15;
+
+var FloatingInput = {
+  visible: false,
+  x: 0,
+  y: 0,
+  text: ""
+};
+
 var renderFloatingInput = function(evt) {
   $("#floating-input").show();
-  $("#floating-input").css({left: evt.pageX, top: evt.pageY + 5});
+  $("#floating-input").css({left: evt.pageX + 10, top: evt.pageY + 15});
   setTimeout(function(){$("#floating-input").focus();}, 100);
 
 }
 
 var renderFloatingDisplay = function(feedback) {
   $("#floating-display").show();
-  var newX = canvasOffsetX + feedback.x;
-  var newY = canvasOffsetY + feedback.y;
+  var newX = canvasOffsetX + feedback.x + floatingOffsetX;
+  var newY = canvasOffsetY + feedback.y + floatingOffsetY;
   $("#floating-display").css({left: newX, top: newY});
   $("#floating-display").val(feedback.text);
 }
@@ -34,10 +44,18 @@ var dist = function(x1, y1, x2, y2) {
 }
 
 var resetActive = function() {
+  var anyReset = false;
   for(var i in arrayFeedbacks) {
     var feedback = arrayFeedbacks[i];
+
+    if(feedback.active) {
+      anyReset = true;
+
+    }
+
     feedback.active = false;
   }
+  return anyReset;
 }
 
 var checkMouseOver = function(loc) {
@@ -70,28 +88,30 @@ var onLeaveInput = function() {
   
   tempFeedback = {active: false};
   $("#floating-input").val("");
+  $("#floating-input").hide();
 }
 
 var doMouseDown = function(evt) {
 
-  onLeaveInput();
-
-  resetActive();
+  onLeaveInput(); //saving text
   evt.stopPropagation();
-  tempFeedback = {
-    id: arrayFeedbacks.length + 1,
-    x: evt.pageX - canvasOffsetX,
-    y: evt.pageY - canvasOffsetY,
-    absX: evt.pageX,
-    absY: evt.pageY,
-    text: "hello world",
-    hover: false,
-    active: true
-  };
 
- 
-  renderFeedbackVisuals();
-  renderFloatingInput(evt);
+  if(!resetActive()){
+
+    tempFeedback = {
+      id: arrayFeedbacks.length + 1,
+      x: evt.pageX - canvasOffsetX,
+      y: evt.pageY - canvasOffsetY,
+      absX: evt.pageX,
+      absY: evt.pageY,
+      text: "hello world",
+      hover: false,
+      active: true
+    };
+   
+    renderFeedbackVisuals();
+    renderFloatingInput(evt);
+  }
 }
 
 var renderFeedbackVisuals = function() {
