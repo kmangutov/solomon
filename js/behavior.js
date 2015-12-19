@@ -15,6 +15,9 @@ var canvasOffsetY = 0;
 var floatingOffsetX = 10;
 var floatingOffsetY = 15;
 
+var designWidth = 0;
+var designHeight = 0;
+
 var tempFeedback = {active: false};
 
 function FloatingInput(id) {
@@ -37,8 +40,8 @@ FloatingInput.prototype.render = function() {
   this.ref.val(this.text);
 };
 FloatingInput.prototype.load = function(feedback) {
-  this.x = canvasOffsetX + feedback.x + floatingOffsetX;
-  this.y = canvasOffsetY + feedback.y + floatingOffsetY;
+  this.x = canvasOffsetX + (feedback.xFrac * designWidth) + floatingOffsetX;
+  this.y = canvasOffsetY + (feedback.yFrac * designHeight) + floatingOffsetY;
   this.text = feedback.text;
   this.visible = true;
   this.render();
@@ -60,7 +63,10 @@ var checkMouseOver = function(loc) {
   var anyShown = false;
   for(var i in arrayFeedbacks) {
     var feedback = arrayFeedbacks[i];
-    if(dist(loc.x, loc.y, feedback.x, feedback.y) <= circleRadius) {
+    if(dist(loc.x, 
+            loc.y, 
+            feedback.xFrac * designWidth, 
+            feedback.yFrac * designHeight) <= circleRadius) {
       
       console.log("mouseovered one");
       floatingDisplay.load(feedback);
@@ -94,14 +100,20 @@ var doMouseDown = function(evt) {
   onLeaveInput(); //saving text
   evt.stopPropagation();
 
+  $("#canvas").css("cursor", "pointer");
+  
   if(!wasVisible){
+
+    var newX = evt.pageX - canvasOffsetX;
+    var newY = evt.pageY - canvasOffsetY;
+    $("#canvas").css("cursor", "default");
 
     tempFeedback = {
       id: arrayFeedbacks.length + 1,
-      x: evt.pageX - canvasOffsetX,
-      y: evt.pageY - canvasOffsetY,
-      absX: evt.pageX,
-      absY: evt.pageY,
+      x: newX,
+      y: newY,
+      xFrac: newX / designWidth,
+      yFrac: newY / designHeight,
       text: "",
     };
    
@@ -117,9 +129,9 @@ var renderFeedbackVisuals = function() {
   for(var i in arrayFeedbacks) {
 
     var feedback = arrayFeedbacks[i];
-    renderKnob(context2d, feedback);  
+    renderKnob(context2d, feedback, designWidth, designHeight);  
   }
-  renderKnob(context2d, tempFeedback);//
+  renderKnob(context2d, tempFeedback, designWidth, designHeight);//
 };
 
 var generateCode = function() {
@@ -128,6 +140,7 @@ var generateCode = function() {
 
 var finish = function(code) {
   $("#submit").text("Thanks! Your code is: " + code);
+  $("#submit").prop('disabled', true);
 }
 
 var onSubmit = function(evt) {
@@ -156,23 +169,34 @@ var onSubmit = function(evt) {
   });
 }
 
-$(document).ready(function(){
+var designHandle = document.getElementById("imgDesign");
+var canvasHandle = document.getElementById("canvas");
 
+var onResize = function() {
+  console.log("designHandle onload width: " + designHandle.width);
+  designWidth = designHandle.width;
+  designHeight = designHandle.height;
+  canvasHandle.width = designHandle.width;
+  canvasHandle.height = designHandle.height;
+  renderFeedbackVisuals();
+}
+
+$(document).ready(function(){
   //$('textarea').autoResize();
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
-
-  canvasHandle = document.getElementById("canvas");
-  var designHandle = document.getElementById("imgDesign");
+  
   var containerHandle = document.getElementById("floatingContainer");
   var submitHandle = $("#submit");
 
   context2d = canvasHandle.getContext("2d");
 
   $("#imgDesign").imagesLoaded(function() {
-    console.log("designHandle onload width: " + designHandle.width);
-    canvasHandle.width = designHandle.width;
-    canvasHandle.height = designHandle.height;
+    onResize();
+  });
+
+  $(window).resize(function() {
+    onResize()
   });
 
   submitHandle.click(function(evt) {

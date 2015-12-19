@@ -18,7 +18,8 @@
 }
 
 #canvas {
-  cursor: pointer;
+  /*cursor: pointer;*/
+  cursor: url('/imgs/cursor.png'), pointer;
 }
 
 .instructionDiv {
