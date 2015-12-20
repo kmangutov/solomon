@@ -18,6 +18,8 @@ var floatingOffsetY = 15;
 var designWidth = 0;
 var designHeight = 0;
 
+var highlightCode = -1;
+
 var tempFeedback = {active: false};
 
 function FloatingInput(id) {
@@ -68,14 +70,18 @@ var checkMouseOver = function(loc) {
             feedback.xFrac * designWidth, 
             feedback.yFrac * designHeight) <= circleRadius) {
       
-      console.log("mouseovered one");
       floatingDisplay.load(feedback);
+      highlightCode = feedback.code;
       anyShown = true;
+
+      renderFeedbackVisuals();
     }
   }
 
   if(!anyShown) {
     floatingDisplay.hide();
+    highlightCode = -1;
+    renderFeedbackVisuals();
   }
 }
 
@@ -118,6 +124,8 @@ var doMouseDown = function(evt) {
       xFrac: newX / designWidth,
       yFrac: newY / designHeight,
       text: "",
+      code: 0,
+
     };
    
     floatingInput.load(tempFeedback);
@@ -128,13 +136,18 @@ var doMouseDown = function(evt) {
 
 var renderFeedbackVisuals = function() {
 
+  console.log("::renderFeedbackVisuals");
+
   context2d.clearRect(0, 0, canvasHandle.width, canvasHandle.height);
   for(var i in arrayFeedbacks) {
 
+    console.log("::renderFeedbackVisuals " + i + " -> " + JSON.stringify(arrayFeedbacks[i]));
+
     var feedback = arrayFeedbacks[i];
-    renderKnob(context2d, feedback, designWidth, designHeight);  
+    renderKnob(context2d, feedback, designWidth, designHeight, highlightCode);  
   }
-  renderKnob(context2d, tempFeedback, designWidth, designHeight);//
+
+  renderKnob(context2d, tempFeedback, designWidth, designHeight, highlightCode);//
 };
 
 var generateCode = function() {
@@ -196,6 +209,18 @@ $(document).ready(function(){
   $("#submit").prop('disabled', true);
 
   context2d = canvasHandle.getContext("2d");
+
+  if(typeof dbGet != "undefined") {
+    dbGet(function(db) {
+      db.bindSelect(function(feedbacks) {
+
+        //console.log("feedbacks: " + JSON.stringify(feedbacks));
+        arrayFeedbacks = feedbacks.slice();
+        //console.log("new arrayFeedbacks: " + JSON.stringify(arrayFeedbacks));
+        renderFeedbackVisuals();
+      });
+    })
+  }
 
   $("#imgDesign").imagesLoaded(function() {
     onResize();

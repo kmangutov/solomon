@@ -1,5 +1,12 @@
-var renderKnob = function(context2d, feedback, designWidth, designHeight) {
-        
+var renderKnob = function(context2d, feedback, designWidth, designHeight, code) {
+    
+    code = code || 0;
+    var target = (code == feedback.code);
+    var radius = circleRadius;
+    if(target) {
+        radius *= 1.8;
+    }
+
     var x = feedback.xFrac * designWidth;
     var y = feedback.yFrac * designHeight;
 
@@ -7,7 +14,7 @@ var renderKnob = function(context2d, feedback, designWidth, designHeight) {
     context2d.strokeStyle = "#555";
     context2d.lineWidth = 2;
     context2d.beginPath();
-    context2d.arc(x, y, circleRadius, 0, 2 * Math.PI);
+    context2d.arc(x, y, radius, 0, 2 * Math.PI);
     context2d.closePath();
     context2d.fill();
     context2d.stroke();
@@ -15,13 +22,16 @@ var renderKnob = function(context2d, feedback, designWidth, designHeight) {
     context2d.strokeStyle = "#000";
     context2d.lineWidth = 1;
     context2d.beginPath();
-    context2d.arc(x, y, circleRadius - 1, 0, 2 * Math.PI);
+    context2d.arc(x, y, radius - 1, 0, 2 * Math.PI);
     context2d.closePath();
     context2d.stroke();
 
-    context2d.fillStyle = "#ff9600";
+    if(!target)
+        context2d.fillStyle = "#ff9600";
+    else
+        context2d.fillStyle = "#00688B";
     context2d.beginPath();
-    context2d.arc(x, y, circleRadius - 5, 0, 2 * Math.PI);
+    context2d.arc(x, y, radius - 5, 0, 2 * Math.PI);
     context2d.closePath();
     context2d.fill();
 }
