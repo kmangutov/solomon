@@ -8,6 +8,7 @@ var canvasHandle;
 var context2d;
 
 var arrayFeedbacks = [];
+var arrayActions = [];
 
 var canvasOffsetX = 0;
 var canvasOffsetY = 0;
@@ -19,8 +20,13 @@ var designWidth = 0;
 var designHeight = 0;
 
 var highlightCode = -1;
+var hoverId = -1;
 
 var tempFeedback = {active: false};
+
+//actions:
+//hover(start, stop, feedback)
+//feedback(start, stop, feedback)
 
 function FloatingInput(id) {
   this.visible = false;
@@ -70,18 +76,32 @@ var checkMouseOver = function(loc) {
             feedback.xFrac * designWidth, 
             feedback.yFrac * designHeight) <= circleRadius) {
       
+      if(hoverId != feedback.id) {
+
+        hoverId = feedback.id;
+        ActionStack.startHover(feedback);
+      }
+
       floatingDisplay.load(feedback);
       highlightCode = feedback.code;
       anyShown = true;
 
       renderFeedbackVisuals();
+
     }
   }
 
   if(!anyShown) {
+
+    hoverId = -1;
+    if(highlightCode != -1) {
+      highlightCode = -1;
+      ActionStack.stopHover();
+      renderFeedbackVisuals();
+    }
+
     floatingDisplay.hide();
-    highlightCode = -1;
-    renderFeedbackVisuals();
+
   }
 }
 
@@ -93,6 +113,7 @@ var onLeaveInput = function() {
 
     console.log("saving " + JSON.stringify(tempFeedback));
     arrayFeedbacks.push(tempFeedback);////
+    ActionStack.stopWrite(tempFeedback);
 
     if(arrayFeedbacks.length >= 3)
       $("#submit").prop('disabled', false);
@@ -119,10 +140,10 @@ var doMouseDown = function(evt) {
 
     tempFeedback = {
       id: arrayFeedbacks.length + 1,
-      x: newX,
-      y: newY,
-      xFrac: newX / designWidth,
-      yFrac: newY / designHeight,
+      x: newX.toFixed(2),
+      y: newY.toFixed(2),
+      xFrac: (newX / designWidth).toFixed(2),
+      yFrac: (newY / designHeight).toFixed(2),
       text: "",
       code: 0,
 
@@ -130,6 +151,7 @@ var doMouseDown = function(evt) {
    
     floatingInput.load(tempFeedback);
     floatingInput.focus();
+    ActionStack.startWrite();
     renderFeedbackVisuals();
   }
 }
@@ -163,7 +185,7 @@ var onSubmit = function(evt) {
 
 
 
-  var session = "initial-v1-no-history";
+  var session = "history-v1";
 
   // collecting design feedback pls no hack
   var a = "https://api.mon";
@@ -174,16 +196,24 @@ var onSubmit = function(evt) {
   var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
 
   var code = generateCode();
-  
+  finish(code);
+
   $.ajax( { url: a + aa + b + c + ca + d,
-      data: JSON.stringify([{design: imgUrl, code: code, vals: arrayFeedbacks}]),
+      data: JSON.stringify([
+        {
+          design: imgUrl, 
+          code: code,
+          stack: ActionStack.getActionStack(),
+          vals: arrayFeedbacks,
+        }]),
+
       type: "POST",
       contentType: "application/json" } )
   .done(function() {
-    finish(code);
+    //finish(code);
   })
   .fail(function() {
-    finish(code);
+    //finish(code);
   });
 }
 

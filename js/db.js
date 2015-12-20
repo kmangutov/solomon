@@ -5,7 +5,7 @@
 var dbGet = function(f) {
 
   // collecting design feedback pls no hack
-  var session = "initial-v1-no-history";
+  var session = "history-v1";
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
