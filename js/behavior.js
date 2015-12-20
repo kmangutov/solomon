@@ -105,6 +105,7 @@ var checkMouseOver = function(loc) {
   }
 }
 
+var newFeedbackCount = 0;
 var onLeaveInput = function() {
   var val = floatingInput.ref.val();
 
@@ -115,7 +116,7 @@ var onLeaveInput = function() {
     arrayFeedbacks.push(tempFeedback);////
     ActionStack.stopWrite(tempFeedback);
 
-    if(arrayFeedbacks.length >= 3)
+    if(++newFeedbackCount >= 3)
       $("#submit").prop('disabled', false);
   }
   
@@ -162,8 +163,6 @@ var renderFeedbackVisuals = function() {
 
   context2d.clearRect(0, 0, canvasHandle.width, canvasHandle.height);
   for(var i in arrayFeedbacks) {
-
-    console.log("::renderFeedbackVisuals " + i + " -> " + JSON.stringify(arrayFeedbacks[i]));
 
     var feedback = arrayFeedbacks[i];
     renderKnob(context2d, feedback, designWidth, designHeight, highlightCode);  
@@ -241,12 +240,19 @@ $(document).ready(function(){
   context2d = canvasHandle.getContext("2d");
 
   if(typeof dbGet != "undefined") {
+
     dbGet(function(db) {
+
+      db.loadSpecific(function(feedbacks){ 
+
+        console.log("::loadSpecific");
+        arrayFeedbacks = feedbacks.slice();
+        renderFeedbackVisuals();
+      });
+
       db.bindSelect(function(feedbacks) {
 
-        //console.log("feedbacks: " + JSON.stringify(feedbacks));
         arrayFeedbacks = feedbacks.slice();
-        //console.log("new arrayFeedbacks: " + JSON.stringify(arrayFeedbacks));
         renderFeedbackVisuals();
       });
     })

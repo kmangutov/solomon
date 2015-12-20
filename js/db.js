@@ -5,7 +5,8 @@
 var dbGet = function(f) {
 
   // collecting design feedback pls no hack
-  var session = "history-v1";
+  //var session = "history-v1";
+  var session = "initial-v1-no-history";
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
@@ -38,21 +39,39 @@ var dbGet = function(f) {
         return "dataNotFound";
       },
 
+      loadSpecific: function(f) {
+
+        var that = this;
+
+        var feedbacks = [];
+        ["3557", "4543"].forEach(function(item) {
+          var vals = that.dataFor(item).vals;
+          for(var i in vals) {
+            vals[i].code = parseInt(item);
+
+            vals[i].x = vals[i].x.toFixed(2);
+            vals[i].y = vals[i].y.toFixed(2);
+
+            vals[i].xFrac = vals[i].xFrac.toFixed(2);
+            vals[i].yFrac = vals[i].yFrac.toFixed(2);
+
+            feedbacks.push(vals[i]);
+          }    
+        });
+
+        f(feedbacks);
+      },
+
       bindSelect: function(f) {
 
         var that = this;
-        console.log("in ::bindSelect");
-
         $("#admin-select").change(function() {
-
-          console.log("in #admin-select::change");
           var feedbacks = [];
           $("#admin-select option:selected").each(function() {
             var code = $(this).text();
             var vals = that.dataFor(code).vals;
             for(var i in vals) {
               vals[i].code = parseInt(code);
-              console.log("push: " + JSON.stringify(vals[i]));
               feedbacks.push(vals[i]);
             }
           });
