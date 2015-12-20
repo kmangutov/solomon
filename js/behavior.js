@@ -87,6 +87,9 @@ var onLeaveInput = function() {
 
     console.log("saving " + JSON.stringify(tempFeedback));
     arrayFeedbacks.push(tempFeedback);////
+
+    if(arrayFeedbacks.length >= 3)
+      $("#submit").prop('disabled', false);
   }
   
   tempFeedback = {active: false};
@@ -145,7 +148,9 @@ var finish = function(code) {
 
 var onSubmit = function(evt) {
 
-  var session = "initial-no-history";
+
+
+  var session = "initial-v1-no-history";
 
   // collecting design feedback pls no hack
   var a = "https://api.mon";
@@ -188,6 +193,7 @@ $(document).ready(function(){
   
   var containerHandle = document.getElementById("floatingContainer");
   var submitHandle = $("#submit");
+  $("#submit").prop('disabled', true);
 
   context2d = canvasHandle.getContext("2d");
 
