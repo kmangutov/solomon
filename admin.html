@@ -29,22 +29,6 @@
       </div>
   </div>
 
-  <div class="medium-3 columns">
-    <p class="r-subtitle">No history</p>
-    <select id="admin-select" multiple>
-    </select>
-  </div>
-
-    <div class="medium-3 columns end">
-    <p class="r-subtitle">History</p>
-    <select id="admin-select-history" multiple>
-    </select>
-  </div>
-
-  <div class="small-12 small-centered columns">
-    <div class="spacer">&nbsp;</div>
-  </div>
-
   <div class="small-12 columns">
     <div id="floatingContainer">
       <img id="imgDesign" src="imgs/illini_dance.jpg"></img>
@@ -54,12 +38,42 @@
     </div>
 
   </div>
+
+
+  <div class="small-3 columns">
+    <p class="r-subtitle">No history</p>
+    <select id="admin-select" multiple>
+    </select>
+  </div>
+
+  <div class="medium-3 columns">
+    <p class="r-subtitle">History</p>
+    <select id="admin-select-history" multiple>
+    </select>
+  </div>
+
+
+  <div class="medium-6 columns">
+    &nbsp;
+  </div>
+
+  <div class="small-12">
+    <p class="r-subtitle">Actions</p>
+    <canvas id="admin-actions-canvas" width="800" height="5000"></canvas>
+  </div>
+
+  <div class="small-12 small-centered columns">
+    <div class="spacer">&nbsp;</div>
+  </div>
+
+
 </div>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 <script src="./js/actionStack.js"></script>
+<script src="./js/actionCanvas.js"></script>
 <script src="./js/rendering.js"></script>
 <script src="./js/db.js"></script>
 <script src="./js/behavior.js"></script>

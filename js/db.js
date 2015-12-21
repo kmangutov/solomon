@@ -62,14 +62,17 @@ var dbGet = function(session, f) {
         f(feedbacks);
       },
 
-      bindSelect: function(elem, f) {
+      bindSelect: function(elem, f, actionStack) {
 
         var that = this;
         $(elem).change(function() {
           var feedbacks = [];
+          var stacks = [];
           $(elem + " option:selected").each(function() {
             var code = $(this).text();
             var vals = that.dataFor(code).vals;
+            var stack = that.dataFor(code).stack;
+
             for(var i in vals) {
               if(!'code' in vals[i] || vals[i].code === 0) {
                 vals[i].code = parseInt(code);
@@ -79,8 +82,12 @@ var dbGet = function(session, f) {
 
               feedbacks.push(vals[i]);
             }
+
+            //ugh
+            stacks.push(stack);
           });
           f(feedbacks);
+          actionStack(stacks);
         });
       },
 
@@ -101,7 +108,10 @@ $(document).ready(function(){
 
     obj.bindSelect("#admin-select", loadFeedbacks);
 
+  }, function(stack) {
+    // do nothing
   });
+
 
   dbGet("history-v1", function(obj) {
     $.each(obj.getIds(), function(key, val) {
@@ -111,7 +121,13 @@ $(document).ready(function(){
           .text(val));
     });
 
-    obj.bindSelect("#admin-select-history", loadFeedbacks);
+    obj.bindSelect("#admin-select-history", function(feedbacks) {
+
+      loadFeedbacks(feedbacks);
+    }, function(stack) {
+
+      actionCanvas.load(stack);
+    });
   });
 
 });
