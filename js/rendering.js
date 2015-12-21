@@ -1,6 +1,11 @@
 var renderKnob = function(context2d, feedback, designWidth, designHeight, code) {
     
+    if('active' in feedback)
+        return;
+
     code = code || 0;
+
+    console.log("render " + JSON.stringify(feedback));
     var target = (code == feedback.code);
     var radius = circleRadius;
     if(target) {
@@ -9,6 +14,9 @@ var renderKnob = function(context2d, feedback, designWidth, designHeight, code) 
 
     var x = feedback.xFrac * designWidth;
     var y = feedback.yFrac * designHeight;
+
+    //console.log("X:" + x + " xFrac: " + feedback.xFrac + ", width: " + designWidth);
+    //console.log("Y:" + y + " yFrac: " + feedback.yFrac + ", height: " + designHeight);
 
     context2d.fillStyle = "#FFF";
     context2d.strokeStyle = "#555";

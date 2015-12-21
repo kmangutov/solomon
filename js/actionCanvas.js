@@ -1,9 +1,9 @@
 var ActionCanvas = (function(){
 
-  var that = this;
+  this.that = this;
 
-  var canvasHandle;
-  var context2d;
+  this.canvasHandle;
+  this.ctx;
 
   var canvasWidth;
   var canvasHeight;
@@ -13,38 +13,91 @@ var ActionCanvas = (function(){
   var SESSION_HEIGHT = 50.0;
   var SESSION_WIDTH = 800.0;
 
-  var TIMESPAN_SECONDS = 120.0;
+  var TIMESPAN_SECONDS = 300.0;//180.0;
 
   var COLOR_HOVER = "#550000";
   var COLOR_WRITE = "#005500";
+
+  var onMouseMove = function(a) {}
+
+  this.detail = new FloatingInput("floating-admin");
+
+  var init = function(id) {
+    this.canvasHandle = $(id);
+    var that = this;
+    this.canvasHandle.mousemove(function(evt) {
+      
+      var relX = evt.pageX - canvasHandle.position().left;
+      var relY = evt.pageY - canvasHandle.position().top;
+
+      var session = relY / SESSION_HEIGHT;
+      var top = Math.round(session) == parseInt(session);
+      session = parseInt(session);
+
+      console.log("move");
+      that.detail.move(evt.pageX + DETAIL_X_OFFSET, evt.pageY + DETAIL_Y_OFFSET);
+      var seconds = relX / SESSION_WIDTH * TIMESPAN_SECONDS;
+
+      if(data.length > session) {
+
+        that.detail.setText("Session: " + session + " Sec:" + seconds.toFixed());
+
+        for(var i in data[session]) {
+          var action = data[session][i];
+
+          var actionText = top? "hover" : "write";
+          if(action.action !== actionText)
+            continue;
+
+          var start = parseFloat(action.start);
+          var stop = parseFloat(action.stop);
+          if(start <= seconds && seconds <= stop) {
+            that.detail.setText("Session: " + action.feedback.code + " Duration: " + action.duration + " sec\n" + action.feedback.text);
+          }
+        }
+      }
+    });
+
+    this.canvasHandle.mouseenter(function(){that.detail.show();}); 
+    this.canvasHandle.mouseleave(function(){that.detail.hide();}); 
+
+    this.ctx = canvasHandle[0].getContext('2d');
+  }
 
   var setData = function(data) {
     console.log("::setData " + JSON.stringify(data));
     this.data = data;
   }
 
-  var updateLocalSize = function() {
-    canvasWidth = canvasHandle.width();
-    canvasHeight = canvasHandle.height();
+  var DETAIL_X_OFFSET = -165;
+  var DETAIL_Y_OFFSET = -190;
+
+  var onMouseMove = function(evt) {
+    console.log("ActionCanvas::onMouseMove " + x + ", " + y);
+
+    var relX = evt.pageX - canvasHandle.position().left;
+    var relY = evt.pageY - canvasHandle.position().top;
+
+    var session = relX / SESSION_HEIGHT;
+    var top = Math.round(session) == parseInt(session);
+
+
+
+    that.detail.move(evt.pageX + DETAIL_X_OFFSET, evt.pageY + DETAIL_Y_OFFSET);
+    that.detail.text("Session: " + session + "\nTop: " + top);
   }
 
   var render = function() {
 
-    console.log("ActionCanvas::render " + this.data.length);
-
-    //canvasHandle.width(SESSION_WIDTH);
-    //canvasHandle.height(SESSION_HEIGHT * this.data.length);
+    console.log("ActionCanvas::render");
 
     canvasWidth = SESSION_WIDTH;
-    canvasHeight = 5000;//SESSION_HEIGHT * 6;//this.data.length;
-    //updateLocalSize();
+    canvasHeight = 5000;
 
-    //context2d.clearRect(0, 0, canvasWidth, canvasHeight);
-
-
-    context2d.fillStyle = "#FFF";
-    context2d.clearRect(0, 0, canvasWidth, canvasHeight);
-    context2d.fillRect(0, 0, canvasWidth - 0, canvasHeight - 0);
+    var ctx = $("#admin-actions-canvas")[0].getContext('2d');
+    ctx.fillStyle = "#FFF";
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.fillRect(0, 0, canvasWidth - 0, canvasHeight - 0);
 
     for(var j in this.data) {
 
@@ -60,41 +113,23 @@ var ActionCanvas = (function(){
         //offset it by number of sessions (j)
         var y1 = SESSION_HEIGHT * j;// * i;
         y1 += row.action === "write"? SESSION_HEIGHT / 2.0 : 0;
-        //var y2 = SESSION_HEIGHT;// * (i + 1);
 
         var width = (x2 - x1);
-        //var height = (y2 - y1);
         var height = SESSION_HEIGHT / 2.0;
 
-        //console.log("ROW: " + JSON.stringify(row));
-        console.log(j + " : " + JSON.stringify([x1, y1, width, height]));
-
-        context2d.fillStyle = row.action === "hover"? COLOR_HOVER : COLOR_WRITE;
-        context2d.fillRect(x1, y1, width, height);
-        context2d.fillStyle = "#FFF";
+        ctx.fillStyle = row.action === "hover"? COLOR_HOVER : COLOR_WRITE;
+        ctx.fillRect(x1, y1, width, height);
+        ctx.fillStyle = "#FFF";
       }
 
-      context2d.fillStyle = "#000";
-      context2d.fillRect(0, SESSION_HEIGHT * j, SESSION_WIDTH, 1);
-
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, SESSION_HEIGHT * j, SESSION_WIDTH, 1);
     }
-  
   }
 
-  var onResize = function() {
-    canvasWidth = canvasHandle.width();
-    canvasHeight = canvasHandle.height();
-    //render();
-  };
-
-
   return function(id) {
-    canvasHandle = $(id);
-    context2d = canvasHandle[0].getContext('2d');
-    //canvasHandle.resize(onResize);
 
-    onResize();
-
+    init(id);
     return {
       load: function(inn) {
         setData(inn);
@@ -107,7 +142,6 @@ var ActionCanvas = (function(){
 
 var actionCanvas;
 
-
 $(document).ready(function(){
-  actionCanvas = ActionCanvas("#admin-actions-canvas");
+  actionCanvas = new ActionCanvas("#admin-actions-canvas");
 });

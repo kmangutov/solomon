@@ -51,3 +51,13 @@ body {
   height: 160px !important;
   resize: none;
 }
+
+#floating-admin{
+  position: absolute;
+  left: 200px;
+  top: 200px;
+  z-index: 1100;
+  width: 230px !important;
+  height: 160px !important;
+  resize: none;
+}

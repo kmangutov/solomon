@@ -74,7 +74,7 @@ var dbGet = function(session, f) {
             var stack = that.dataFor(code).stack;
 
             for(var i in vals) {
-              if(!'code' in vals[i] || vals[i].code === 0) {
+              if(!('code' in vals[i]) || vals[i].code === 0) {
                 vals[i].code = parseInt(code);
               }
 
@@ -106,10 +106,10 @@ $(document).ready(function(){
           .text(val));
     });
 
-    obj.bindSelect("#admin-select", loadFeedbacks);
+    obj.bindSelect("#admin-select", loadFeedbacks, function(stack) {
+      // do nothing
+    });
 
-  }, function(stack) {
-    // do nothing
   });
 
 
