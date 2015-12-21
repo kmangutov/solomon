@@ -35,7 +35,6 @@ var ActionStack = (function() {
     return obj; 
   }
 
-
   return {
 
     getActionStack: function() {

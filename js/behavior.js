@@ -22,7 +22,7 @@ var designHeight = 0;
 var highlightCode = -1;
 var hoverId = -1;
 
-var tempFeedback = {active: false};
+var tempFeedback = {id: -1};
 
 //actions:
 //hover(start, stop, feedback)
@@ -168,7 +168,8 @@ var renderFeedbackVisuals = function() {
     renderKnob(context2d, feedback, designWidth, designHeight, highlightCode);  
   }
 
-  renderKnob(context2d, tempFeedback, designWidth, designHeight, highlightCode);//
+  if(tempFeedback.id != -1)
+    renderKnob(context2d, tempFeedback, designWidth, designHeight, highlightCode);//
 };
 
 var generateCode = function() {
@@ -246,7 +247,7 @@ $(document).ready(function(){
 
   /*if(typeof dbGet != "undefined") {
 
-    dbGet(function(db) {
+    dbGet("initial-v1-no-history", function(db) {
 
       db.loadSpecific(function(feedbacks){ 
 
@@ -262,6 +263,7 @@ $(document).ready(function(){
       });
     })
   }*/
+
 
   $("#imgDesign").imagesLoaded(function() {
     onResize();
