@@ -228,6 +228,11 @@ var onResize = function() {
   renderFeedbackVisuals();
 }
 
+var loadFeedbacks = function(feedbacks) {
+  arrayFeedbacks = feedbacks.slice();
+  renderFeedbackVisuals();
+}
+
 $(document).ready(function(){
   //$('textarea').autoResize();
   floatingInput = new FloatingInput("floating-input");
@@ -239,7 +244,7 @@ $(document).ready(function(){
 
   context2d = canvasHandle.getContext("2d");
 
-  if(typeof dbGet != "undefined") {
+  /*if(typeof dbGet != "undefined") {
 
     dbGet(function(db) {
 
@@ -256,7 +261,7 @@ $(document).ready(function(){
         renderFeedbackVisuals();
       });
     })
-  }
+  }*/
 
   $("#imgDesign").imagesLoaded(function() {
     onResize();
