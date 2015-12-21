@@ -39,21 +39,22 @@ var dbGet = function(session, f) {
         return "dataNotFound";
       },
 
-      loadSpecific: function(f) {
+      //["3557", "4543"]
+      loadSpecific: function(items, f) {
 
         var that = this;
 
         var feedbacks = [];
-        ["3557", "4543"].forEach(function(item) {
+        items.forEach(function(item) {
           var vals = that.dataFor(item).vals;
           for(var i in vals) {
             vals[i].code = parseInt(item);
 
-            vals[i].x = vals[i].x.toFixed(2);
-            vals[i].y = vals[i].y.toFixed(2);
+            vals[i].x = parseInt(vals[i].x).toFixed(2);
+            vals[i].y = parseInt(vals[i].y).toFixed(2);
 
-            vals[i].xFrac = vals[i].xFrac.toFixed(2);
-            vals[i].yFrac = vals[i].yFrac.toFixed(2);
+            vals[i].xFrac = parseInt(vals[i].xFrac).toFixed(2);
+            vals[i].yFrac = parseInt(vals[i].yFrac).toFixed(2);
 
             feedbacks.push(vals[i]);
           }    
@@ -62,16 +63,19 @@ var dbGet = function(session, f) {
         f(feedbacks);
       },
 
-      bindSelect: function(f) {
+      bindSelect: function(elem, f) {
 
         var that = this;
-        $("#admin-select").change(function() {
+        $(elem).change(function() {
           var feedbacks = [];
-          $("#admin-select option:selected").each(function() {
+          $(elem + " option:selected").each(function() {
             var code = $(this).text();
             var vals = that.dataFor(code).vals;
             for(var i in vals) {
-              vals[i].code = parseInt(code);
+              if(!'code' in vals[i] || vals[i].code === 0) {
+                vals[i].code = parseInt(code);
+              }
+
               feedbacks.push(vals[i]);
             }
           });
@@ -92,6 +96,24 @@ $(document).ready(function(){
         .append($("<option></option>")
           .attr("value", val)
           .text(val));
+    });
+
+    obj.bindSelect("#admin-select", loadFeedbacks);
+
+  });
+
+  dbGet("history-v1", function(obj) {
+    $.each(obj.getIds(), function(key, val) {
+      $("#admin-select-history")
+        .append($("<option></option>")
+          .attr("value", val)
+          .text(val));
+    });
+
+    obj.bindSelect("#admin-select-history", loadFeedbacks);
+
+    obj.loadSpecific(["3043"], function f(feedbacks) {
+      console.log("REAL HISTORY: " + JSON.stringify(feedbacks));
     });
   });
 

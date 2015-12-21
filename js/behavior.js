@@ -183,9 +183,7 @@ var finish = function(code) {
 
 var onSubmit = function(evt) {
 
-
-
-  var session = "history-v1";
+  var session = "history-v2";
 
   // collecting design feedback pls no hack
   var a = "https://api.mon";
@@ -235,7 +233,6 @@ var loadFeedbacks = function(feedbacks) {
 }
 
 $(document).ready(function(){
-  //$('textarea').autoResize();
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
   
@@ -244,26 +241,6 @@ $(document).ready(function(){
   $("#submit").prop('disabled', true);
 
   context2d = canvasHandle.getContext("2d");
-
-  /*if(typeof dbGet != "undefined") {
-
-    dbGet("initial-v1-no-history", function(db) {
-
-      db.loadSpecific(function(feedbacks){ 
-
-        console.log("::loadSpecific");
-        arrayFeedbacks = feedbacks.slice();
-        renderFeedbackVisuals();
-      });
-
-      db.bindSelect(function(feedbacks) {
-
-        arrayFeedbacks = feedbacks.slice();
-        renderFeedbackVisuals();
-      });
-    })
-  }*/
-
 
   $("#imgDesign").imagesLoaded(function() {
     onResize();
