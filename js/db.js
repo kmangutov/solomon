@@ -32,7 +32,6 @@ var dbGet = function(session, f) {
         console.log("::dataFor " + id);
         for(var i = 0; i < data.length; i++) {
           if(id === data[i]["code"]) {
-            console.log("::dataFor return " + JSON.stringify(data[i]));
             return data[i];
           }
         }
@@ -76,6 +75,8 @@ var dbGet = function(session, f) {
                 vals[i].code = parseInt(code);
               }
 
+              console.log("::bindSelect PUSH " + JSON.stringify(vals[i]));
+
               feedbacks.push(vals[i]);
             }
           });
@@ -111,10 +112,6 @@ $(document).ready(function(){
     });
 
     obj.bindSelect("#admin-select-history", loadFeedbacks);
-
-    obj.loadSpecific(["3043"], function f(feedbacks) {
-      console.log("REAL HISTORY: " + JSON.stringify(feedbacks));
-    });
   });
 
 });

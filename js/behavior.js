@@ -229,6 +229,7 @@ var onResize = function() {
 
 var loadFeedbacks = function(feedbacks) {
   arrayFeedbacks = feedbacks.slice();
+  console.log("::loadFeedbacks " + JSON.stringify(feedbacks));
   renderFeedbackVisuals();
 }
 
