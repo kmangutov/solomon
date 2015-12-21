@@ -2,11 +2,11 @@
 
 
 
-var dbGet = function(f) {
+var dbGet = function(session, f) {
 
   // collecting design feedback pls no hack
   //var session = "history-v1";
-  var session = "initial-v1-no-history";
+  //var session = "initial-v1-no-history";
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
@@ -86,7 +86,7 @@ var dbGet = function(f) {
 
 $(document).ready(function(){
 
-  dbGet(function(obj) {
+  dbGet("initial-v1-no-history", function(obj) {
     $.each(obj.getIds(), function(key, val) {
       $("#admin-select")
         .append($("<option></option>")
