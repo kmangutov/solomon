@@ -90,33 +90,39 @@ var checkMouseOver = function(loc) {
             loc.y, 
             feedback.xFrac * designWidth, 
             feedback.yFrac * designHeight) <= circleRadius * 1.8) {
-      
+      //we found a feedback we are hovering
+
       if(hoverId != feedback.id) {
 
+        //we are hovering a new one not an old one
         hoverId = feedback.id;
         ActionStack.startHover(feedback);
       }
 
+      //Set the return feedback
+      returnFeedback = feedback; 
+
+      //update ui
       floatingDisplay.load(feedback);
       highlightCode = feedback.code;
       anyShown = true;
-
-      renderFeedbackVisuals();
     }
   }
 
   if(!anyShown) {
 
+    //we are not hovering over anything
     hoverId = -1;
     if(highlightCode != -1) {
       highlightCode = -1;
       ActionStack.stopHover();
-      renderFeedbackVisuals();
     }
 
     floatingDisplay.hide();
-
   }
+
+  renderFeedbackVisuals();
+  return returnFeedback;
 }
 
 var newFeedbackCount = 0;
@@ -159,26 +165,38 @@ var doMouseDown = function(evt) {
 
     console.log("::doMouseDown xFrac " + (newX / designWidth).toFixed(2));
 
-    tempFeedback = {
-      id: arrayFeedbacks.length + 1,
-      x: newX.toFixed(2),
-      y: newY.toFixed(2),
-      xFrac: (newX / designWidth).toFixed(2),
-      yFrac: (newY / designHeight).toFixed(2),
-      text: "",
-      code: 0,
-    };
+    //check if we want to edit existing or make a new one
+    var loc = {x: newX, y: newY};
+    var clickedFeedback = checkMouseOver(loc);
+
+    if(!jQuery.isEmptyObject(clickedFeedback)) {
+      
+      //start editing existing feedback
+      tempFeedback = clickedFeedback;
+      //ActionStack.startEdit(clickedFeedback);
+    } else {
+
+      tempFeedback = {
+        id: arrayFeedbacks.length + 1,
+        x: newX.toFixed(2),
+        y: newY.toFixed(2),
+        xFrac: (newX / designWidth).toFixed(2),
+        yFrac: (newY / designHeight).toFixed(2),
+        text: "",
+        code: 0,
+      };
+    }
    
+    ActionStack.startWrite(tempFeedback);
     floatingInput.load(tempFeedback);
     floatingInput.focus();
-    ActionStack.startWrite();
     renderFeedbackVisuals();
   }
 }
 
 var renderFeedbackVisuals = function() {
 
-  console.log("::renderFeedbackVisuals");
+  //console.log("::renderFeedbackVisuals");
 
   context2d.clearRect(0, 0, designWidth, designHeight);
   for(var i in arrayFeedbacks) {

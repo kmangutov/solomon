@@ -5,7 +5,7 @@ var renderKnob = function(context2d, feedback, designWidth, designHeight, code) 
 
     code = code || 0;
 
-    console.log("render " + JSON.stringify(feedback));
+    //console.log("render " + JSON.stringify(feedback));
     var target = (code == feedback.code);
     var radius = circleRadius;
     if(target) {

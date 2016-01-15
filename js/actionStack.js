@@ -10,6 +10,7 @@ var ActionStack = (function() {
 
   var currentHover;
   var currentWrite;
+  var currentEdit;
 
   var HoverAction = function() {
     this.action = "hover";
@@ -25,6 +26,15 @@ var ActionStack = (function() {
     this.stop = 0;
     this.duration = -1;
     this.feedback = {};
+  }
+
+  var EditAction = function() {
+    this.action = "edit";
+    this.start = timeMs();
+    this.stop = 0;
+    this.duration = -1;
+    this.oldFeedback = {};
+    this.newFeedback = {};
   }
 
   var FinishAction = function() {
@@ -60,8 +70,9 @@ var ActionStack = (function() {
       console.log(JSON.stringify(actionStack));
     },
 
-    startWrite: function() {
+    startWrite: function(feedback) {
       currentWrite = new WriteAction();
+      currentWrite.oldText = feedback.text;
     },
 
     stopWrite: function(feedback) {
@@ -69,6 +80,19 @@ var ActionStack = (function() {
       currentWrite = applyDuration(currentWrite);
       actionStack.push(currentWrite);
       currentWrite = {};
+      console.log(JSON.stringify(actionStack));
+    },
+
+    startEdit: function(feedback) {
+      currentEdit = new EditAction();
+      currentEdit.oldFeedback = feedback;
+    },
+
+    stopEdit: function(feedback) {
+      currentEdit.newFeedback = feedback;
+      currentEdit = applyDuration(currentEdit);
+      actionStack.push(currentEdit);
+      currentEdit = {};
       console.log(JSON.stringify(actionStack));
     },
 
