@@ -27,6 +27,13 @@ var ActionStack = (function() {
     this.feedback = {};
   }
 
+  var FinishAction = function() {
+    this.action = "finish";
+    this.start = timeMs();
+    this.stop = this.start;
+    this.duration = 0;
+  }
+
   var applyDuration = function(obj) {
     var ms = timeMs() - obj.start;
     obj.duration = ms.toFixed(2);
@@ -62,6 +69,12 @@ var ActionStack = (function() {
       currentWrite = applyDuration(currentWrite);
       actionStack.push(currentWrite);
       currentWrite = {};
+      console.log(JSON.stringify(actionStack));
+    },
+
+    finish: function() {
+      var finishAction = new FinishAction();
+      actionStack.push(finishAction);
       console.log(JSON.stringify(actionStack));
     },
 

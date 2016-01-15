@@ -81,13 +81,15 @@ var dist = function(x1, y1, x2, y2) {
 
 var checkMouseOver = function(loc) {
 
+  var returnFeedback = {};
+
   var anyShown = false;
   for(var i in arrayFeedbacks) {
     var feedback = arrayFeedbacks[i];
     if(dist(loc.x, 
             loc.y, 
             feedback.xFrac * designWidth, 
-            feedback.yFrac * designHeight) <= circleRadius) {
+            feedback.yFrac * designHeight) <= circleRadius * 1.8) {
       
       if(hoverId != feedback.id) {
 
@@ -200,7 +202,7 @@ var finish = function(code) {
 
 var onSubmit = function(evt) {
 
-  var session = "history-v2";
+  var session = "history-v3";
 
   // collecting design feedback pls no hack
   var a = "https://api.mon";
@@ -213,6 +215,7 @@ var onSubmit = function(evt) {
   var code = generateCode();
   finish(code);
 
+  ActionStack.finish();
   $.ajax( { url: a + aa + b + c + ca + d,
       data: JSON.stringify([
         {

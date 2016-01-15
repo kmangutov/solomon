@@ -1,5 +1,5 @@
 body {
-  background-color: #282828 !important;
+  background-color: #fff;//#282828 !important;
 
 }
 
@@ -11,7 +11,7 @@ body {
 .r-title { 
   font-family: 'Montserrat', sans-serif;
   font-size: 28px;
-  color: #D2D9DC;
+  color: #111;//#D2D9DC;
   font-weight: 200;
   padding-bottom: 3px;
 
@@ -24,7 +24,7 @@ body {
   padding-top: 20px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16.5px !important;
-  color: #727E82;
+  color: #111;//#D2D9DC;//#727E82;
 }
 
 .spacer {
