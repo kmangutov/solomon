@@ -69,7 +69,13 @@ FloatingInput.prototype.move = function(left, top) {
 }
 FloatingInput.prototype.focus = function() {
   var that = this;
-  setTimeout(function() {that.ref.focus();}, 100);
+  setTimeout(function() {
+
+    var orig = that.ref.val();
+    that.ref.val('');
+    that.ref.blur().focus().val(orig);
+    //that.ref.focus().val(that.ref.val());
+  }, 100);
 };
 
 var floatingInput;
