@@ -239,8 +239,9 @@ var onSubmit = function(evt) {
         {
           design: imgUrl, 
           code: code,
-          stack: ActionStack.getActionStack(),
+          elapsedTime: ActionStack.elapsedTime(),
           vals: arrayFeedbacks,
+          stack: ActionStack.getActionStack(),
         }]),
 
       type: "POST",

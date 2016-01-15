@@ -102,6 +102,9 @@ var ActionStack = (function() {
       console.log(JSON.stringify(actionStack));
     },
 
+    elapsedTime: function() {
+      return timeMs();
+    },
   }
 
 })();
