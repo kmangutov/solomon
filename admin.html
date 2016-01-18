@@ -1,0 +1,85 @@
+
+
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="bower_components/foundation/css/foundation.min.css">
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/redpen.css">
+
+<body>
+
+
+<textarea id="floating-input">
+</textarea>
+
+<textarea id="floating-display">
+</textarea>
+
+<textarea id="floating-admin" readonly>
+</textarea>
+
+<div class="row">
+
+  <div class="small-12 small-centered columns">
+    <div class="spacer">&nbsp;</div>
+    <div class="spacer">&nbsp;</div>
+  </div>
+
+  <div class="small-12 centered columns">
+      <div class="div-context">
+        <span class="r-title">Dance Poster</span>
+        <p class="r-subtitle">Please leave at least <b>three</b> (3) comments.</p>
+        <p class="r-subtitle">This is a poster advertising a dance show held by a University student organization. The target audience is University students interested in ballroom dancing. The poster's purpose is to notify those interested in ballroom dancing about an upcoming show held by the organization.</p>
+      </div>
+  </div>
+
+  <div class="small-12 columns">
+    <div id="floatingContainer">
+      <img id="imgDesign" src="imgs/illini_dance.jpg"></img>
+      <div class="floatingDiv" id="floatingDiv">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="small-3 columns">
+    <p class="r-subtitle">No history</p>
+    <select id="admin-select" multiple>
+    </select>
+  </div>
+
+  <div class="medium-3 columns">
+    <p class="r-subtitle">History</p>
+    <select id="admin-select-history" multiple>
+    </select>
+  </div>
+
+
+  <div class="medium-6 columns">
+    &nbsp;
+  </div>
+
+  <div class="small-12">
+    <p class="r-subtitle">Actions</p>
+    <canvas id="admin-actions-canvas" width="800" height="5000"></canvas>
+  </div>
+
+  <div class="small-12 small-centered columns">
+    <div class="spacer">&nbsp;</div>
+  </div>
+
+
+</div>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<script src="./js/FloatingInput.js"></script>
+<script src="./js/actionStack.js"></script>
+<script src="./js/rendering.js"></script>
+<script src="./js/db.js"></script>
+<script src="./js/behavior.js"></script>
+<script src="./js/actionCanvas.js"></script>
+
+</body>
