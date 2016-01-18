@@ -239,6 +239,8 @@ var onSubmit = function(evt) {
   var code = generateCode();
   finish(code);
 
+  var submitTime = new Date().getTime();
+
   ActionStack.finish();
   $.ajax( { url: a + aa + b + c + ca + d,
       data: JSON.stringify([
@@ -246,6 +248,7 @@ var onSubmit = function(evt) {
           design: imgUrl, 
           code: code,
           elapsedTime: ActionStack.elapsedTime(),
+          submitTime: submitTime,
           vals: arrayFeedbacks,
           stack: ActionStack.getActionStack(),
         }]),
