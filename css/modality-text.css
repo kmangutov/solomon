@@ -1,0 +1,14 @@
+#input-feedback {
+  margin: 20px 0px;
+  height: 100px;
+}
+
+#viewport-comments {
+  height: 200px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+#sort {
+  float: right;
+}

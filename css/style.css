@@ -1,0 +1,58 @@
+.test {
+  background-color: #EEEEEE !important;
+}
+
+#floatingContainer {
+  position: relative;
+}
+
+.title {
+  margin: 40px;
+}
+
+.floatingDiv {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 1000;
+}
+
+#canvas {
+  /*cursor: pointer;*/
+  cursor: url('/imgs/cursor.png'), pointer;
+}
+
+.instructionDiv {
+  margin: 40px;
+}
+
+.feedbackBox {
+  padding: 10px;
+  margin: 10px !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: #BBB;
+}
+
+.deleteButton {
+  padding: 10px;
+}
+
+.submitButton {
+  margin: 40px !important;
+}
+
+.comment_block {
+  padding: 15px 0px !important;
+}
+
+button {
+  margin: 0px !important;
+}
+
+/*img {
+  max-width: none !important;
+  min-width: 100% !important;
+}*/
