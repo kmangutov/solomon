@@ -142,8 +142,8 @@ var onLeaveInput = function() {
     arrayFeedbacks.push(tempFeedback);////
     ActionStack.stopWrite(tempFeedback);
 
-    if(++newFeedbackCount >= 3)
-      $("#submit").prop('disabled', false);
+    //if(++newFeedbackCount >= 3)
+    //  $("#submit").prop('disabled', false);
   }
   
   tempFeedback = {active: false};
@@ -293,7 +293,6 @@ $(document).ready(function(){
   
   var containerHandle = document.getElementById("floatingContainer");
   var submitHandle = $("#submit");
-  $("#submit").prop('disabled', true);
 
   context2d = canvasHandle.getContext("2d");
 
