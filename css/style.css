@@ -1,3 +1,10 @@
+body {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 16.5px !important;
+  font-color: #111;//#D2D9DC;//#727E82;
+
+}
+
 .test {
   background-color: #EEEEEE !important;
 }
