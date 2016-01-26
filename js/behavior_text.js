@@ -53,17 +53,33 @@ var bind = function() {
   });
 }
 
+var generateCode = function() {
+
+  return (Math.random() * 1000000 + "").substring(0, 4);
+}
+
 var finish = function(code) {
+
   $("#submit").text("Thanks! Your code is: " + code);
   $("#submit").prop('disabled', true);
 }
 
 var onSubmit = function(evt) {
 
-  var feedback = $("#input-feedback").text();
+  var code = generateCode();
+  finish(code);
+
+  var feedback = $("#input-feedback").val();
   console.log("onSubmit " + feedback);
 
-  SolomonService.postOne(JSON.stringify([{vals: feedback}]));
+  var submitTime = new Date().getTime();
+
+  SolomonService.postOne(JSON.stringify([
+    {
+      submitTime: submitTime,
+      code: code,
+      vals: feedback
+    }]));
 }
 
 $(document).ready(function(){
@@ -71,7 +87,13 @@ $(document).ready(function(){
   init();
   bind();
 
+  SolomonService.getAll(function f(data) {
+    console.log(JSON.stringify(data));
+  });
+
   var submitHandle = $("#submit");
+  submitHandle.prop('disabled', false);
+
   submitHandle.click(function(evt) {
     onSubmit(evt);
   });
