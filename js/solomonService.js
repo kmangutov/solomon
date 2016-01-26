@@ -1,7 +1,7 @@
 
-var SolomonService = (function() {
+var SolomonService = function(type) {
 
-  var session = "history-text-v3";
+  var session = "history-" + type + "-v3";
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
@@ -14,6 +14,7 @@ var SolomonService = (function() {
   return {
   
     getAll: function(f) {
+      console.log("SolomonService::getAll");
       $.get(a + aa + b + c + ca + d, function(data) {
         f(data);
       });
@@ -32,6 +33,6 @@ var SolomonService = (function() {
         console.log("SolomonService::postOne fail: " + e);
       });
     }
-  }
 
-})();
+  }
+}

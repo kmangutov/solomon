@@ -74,7 +74,7 @@ var onSubmit = function(evt) {
 
   var submitTime = new Date().getTime();
 
-  SolomonService.postOne(JSON.stringify([
+  SolomonService("text").postOne(JSON.stringify([
     {
       submitTime: submitTime,
       code: code,
@@ -87,7 +87,7 @@ $(document).ready(function(){
   init();
   bind();
 
-  SolomonService.getAll(function f(data) {
+  SolomonService("text").getAll(function f(data) {
     console.log(JSON.stringify(data));
   });
 

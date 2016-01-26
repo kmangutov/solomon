@@ -8,7 +8,7 @@ var canvasHandle;
 var context2d;
 
 var arrayFeedbacks = [];
-var arrayActions = [];
+var arrayMyFeedbacks = [];
 
 var canvasOffsetX = 0;
 var canvasOffsetY = 0;
@@ -140,6 +140,7 @@ var onLeaveInput = function() {
 
     console.log("saving " + JSON.stringify(tempFeedback));
     arrayFeedbacks.push(tempFeedback);////
+    arrayMyFeedbacks.push(tempFeedback);
     ActionStack.stopWrite(tempFeedback);
 
     //if(++newFeedbackCount >= 3)
@@ -242,7 +243,28 @@ var onSubmit = function(evt) {
   var submitTime = new Date().getTime();
 
   ActionStack.finish();
-  $.ajax( { url: a + aa + b + c + ca + d,
+  arrayFeedbacks.forEach(function(val, i, arr) {
+    arr[i].code = code;
+  });
+  arrayMyFeedbacks.forEach(function(val, i, arr) {
+    arr[i].code = code;
+  });
+
+  //SolomonService("2d").
+  var data = [
+    {
+      design: imgUrl, 
+      code: code,
+      elapsedTime: ActionStack.elapsedTime(),
+      submitTime: submitTime,
+      myVals: arrayMyFeedbacks,
+      vals: arrayFeedbacks,
+      stack: ActionStack.getActionStack(),
+    }];
+
+  SolomonService("2d").postOne(JSON.stringify(data));
+
+  /*$.ajax( { url: a + aa + b + c + ca + d,
       data: JSON.stringify([
         {
           design: imgUrl, 
@@ -260,7 +282,7 @@ var onSubmit = function(evt) {
   })
   .fail(function() {
     //finish(code);
-  });
+  });*/
 }
 
 var designHandle = document.getElementById("imgDesign");
@@ -282,10 +304,21 @@ var onResize = function() {
 }
 
 var loadFeedbacks = function(feedbacks) {
-  arrayFeedbacks = feedbacks.slice();
+  arrayFeedbacks = arrayFeedbacks.concat(feedbacks);//feedbacks.slice();
   console.log("::loadFeedbacks " + JSON.stringify(feedbacks));
   renderFeedbackVisuals();
 }
+
+
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+  function(m,key,value) {
+    vars[key] = value;
+  });
+  return vars;
+}
+
 
 $(document).ready(function(){
   floatingInput = new FloatingInput("floating-input");
@@ -293,6 +326,7 @@ $(document).ready(function(){
   
   var containerHandle = document.getElementById("floatingContainer");
   var submitHandle = $("#submit");
+  submitHandle.prop('disabled', false);
 
   context2d = canvasHandle.getContext("2d");
 
@@ -326,5 +360,17 @@ $(document).ready(function(){
   canvasHandle.addEventListener("mousedown", function(evt) {
     doMouseDown(evt);
   }, false);
+
+  //HISTORY CONDITION
+  var history = getUrlVars()["history"];
+
+  if(history === "true") {
+    SolomonService("2d").getAll(function f(data) {
+      data.forEach(function f(obj, i, arr) {
+        loadFeedbacks(obj.myVals);
+      });
+    });
+  }
+
 }); 
 
