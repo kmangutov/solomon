@@ -99,4 +99,17 @@ $(document).ready(function(){
   });
 
 
+  //HISTORY CONTROL
+  var history = getUrlVars()["history"];
+  if(history === "true") {
+    SolomonService("2d").getAll(function f(data) {
+      data.forEach(function f(obj, i, arr) {
+        loadFeedbacks(obj.myVals);
+      });
+    });
+  } else {
+    $('#history-condition').hide();
+  }
+
+
 });

@@ -309,17 +309,6 @@ var loadFeedbacks = function(feedbacks) {
   renderFeedbackVisuals();
 }
 
-
-function getUrlVars() {
-  var vars = {};
-  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
-  function(m,key,value) {
-    vars[key] = value;
-  });
-  return vars;
-}
-
-
 $(document).ready(function(){
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
