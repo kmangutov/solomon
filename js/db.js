@@ -106,7 +106,11 @@ $(document).ready(function(){
           .text(val));
     });
 
-    obj.bindSelect("#admin-select", loadFeedbacks, function(stack) {
+    obj.bindSelect("#admin-select", 
+      function(d) {
+        clearFeedbacks(); 
+        loadFeedbacks(d);
+      }, function(stack) {
       // do nothing
     });
 
@@ -122,11 +126,14 @@ $(document).ready(function(){
     });
 
     obj.bindSelect("#admin-select-history", function(feedbacks) {
-
+      clearFeedbacks();
       loadFeedbacks(feedbacks);
     }, function(stack) {
 
-      actionCanvas.load(stack);
+      //actionCanvas.load(stack);
+      console.log(JSON.stringify(ActionCanvas));
+      var f = ActionCanvas;//("#admin-actions-canvas").load(stack);
+      f("#admin-actions-canvas").load(stack);
     });
   });
 

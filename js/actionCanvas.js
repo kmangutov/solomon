@@ -1,5 +1,6 @@
 var ActionCanvas = (function(){
 
+  console.log("ActionCanvas.js");
   this.that = this;
 
   this.canvasHandle;
