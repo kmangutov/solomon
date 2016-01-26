@@ -226,7 +226,7 @@ var finish = function(code) {
 
 var onSubmit = function(evt) {
 
-  var session = "history-v3";
+  var session = "history-2d-v3";
 
   // collecting design feedback pls no hack
   var a = "https://api.mon";
