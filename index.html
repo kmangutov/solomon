@@ -29,12 +29,35 @@
   <div class="small-12 columns">
     <center>
 
-    <a href="modality-2d.html" class="button">I'm ready</a> 
+    <a href="modality-2d.html" class="button" id="submit">I'm ready</a> 
   
     </center>
   </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var urls = [
+  "modality-2d.html",
+  "modality-2d.html?history=true",
+  "modality-text.html",
+  "modality-text.html?history=true"
+];
+
+$(document).ready(function(){
+
+  var submitHandle = $("#submit");
+  submitHandle.prop('href', urls[randomInt(0,3)]);
+
+});
+
+</script>
 
 
 </body>
