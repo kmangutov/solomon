@@ -27,6 +27,10 @@ body {
   color: #111;//#D2D9DC;//#727E82;
 }
 
+.r-bigger {
+  font-size: 18px !important;
+}
+
 .spacer {
   margin: 5px;
 }

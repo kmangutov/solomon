@@ -3,11 +3,11 @@
   height: 100px;
 }
 
-#viewport-comments {
+/*#viewport-comments {
   height: 200px;
   overflow-y: scroll;
   width: 100%;
-}
+}*/
 
 #sort {
   float: right;
