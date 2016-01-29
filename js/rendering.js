@@ -1,12 +1,12 @@
-var renderKnob = function(context2d, feedback, designWidth, designHeight, code) {
+var renderKnob = function(context2d, feedback, designWidth, designHeight, hoverId, highlightCode) {
     
     if('active' in feedback)
         return;
 
-    code = code || 0;
+    hoverId = hoverId || 0;
 
     //console.log("render " + JSON.stringify(feedback));
-    var target = (code == feedback.code);
+    var target = (hoverId == feedback.id && highlightCode == feedback.code);
     var radius = circleRadius;
     if(target) {
         radius *= 1.8;

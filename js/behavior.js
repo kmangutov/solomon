@@ -155,11 +155,11 @@ var renderFeedbackVisuals = function() {
   for(var i in arrayFeedbacks) {
 
     var feedback = arrayFeedbacks[i];
-    renderKnob(context2d, feedback, designWidth, designHeight, highlightCode);  
+    renderKnob(context2d, feedback, designWidth, designHeight, hoverId, highlightCode);  
   }
 
   if(tempFeedback.id != -1)
-    renderKnob(context2d, tempFeedback, designWidth, designHeight, highlightCode);//
+    renderKnob(context2d, tempFeedback, designWidth, designHeight, hoverId, highlightCode);//
 };
 
 var generateCode = function() {
