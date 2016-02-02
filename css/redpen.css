@@ -20,8 +20,19 @@ body {
   border-width: 1;
 }
 
+.r-heading {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #111;//#D2D9DC;
+  font-weight: 200;
+  padding-bottom: 1px;
+
+  border-color: #727E82;
+  border-width: 1;
+}
+
 .r-subtitle {
-  padding-top: 5px;
+  padding-top: 1px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16.5px !important;
   color: #111;//#D2D9DC;//#727E82;
