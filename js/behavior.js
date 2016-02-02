@@ -122,7 +122,7 @@ var doMouseDown = function(evt) {
     var loc = {x: newX, y: newY};
     var clickedFeedback = checkMouseOver(loc);
 
-    if(!jQuery.isEmptyObject(clickedFeedback)) {
+    if(!jQuery.isEmptyObject(clickedFeedback) && clickedFeedback.code == 0) {
       
       //start editing existing feedback
       tempFeedback = clickedFeedback;
