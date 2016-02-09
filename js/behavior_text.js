@@ -3,6 +3,21 @@ var arrayFeedbacks = [];
 var showStack = [];
 var snapshots = [];
 
+var doHistory = false;
+
+var imgCondition;
+if(Math.random() >= 0.5) {
+  imgCondition = {
+    imgUrl: "imgs/image-a.jpg",
+    name: "a"
+  };
+} else {
+  imgCondition = {
+    imgUrl: "imgs/image-b.jpg",
+    name: "b"
+  };
+}
+
 var timeZero = new Date().getTime() / 1000;
 var timeMs = function() {
   return (new Date().getTime() / 1000 - timeZero).toFixed(2);
@@ -99,8 +114,16 @@ var onSubmit = function(evt) {
 
   var submitTime = new Date().getTime();
 
-  SolomonService("text").postOne(JSON.stringify([
+  var sessionName;
+  if(doHistory) {
+    sessionName = "history-text-" + imgCondition.name;
+  } else {
+    sessionName = "nohistory-text" + imgCondition.name;
+  }
+
+  SolomonService(sessionName).postOne(JSON.stringify([
     {
+      imgCondition: imgCondition,
       submitTime: submitTime,
       code: code,
       myVals: {val: feedback, history: snapshots},
@@ -116,6 +139,8 @@ $(document).ready(function(){
 
   var submitHandle = $("#submit");
 
+  $('#imgDesign').attr('src', imgCondition.imgUrl);
+
   submitHandle.click(function(evt) {
     onSubmit(evt);
   });
@@ -128,7 +153,8 @@ $(document).ready(function(){
   //HISTORY CONTROL
   var history = getUrlVars()["history"];
   if(history === "true") {
-    SolomonService("text").getAll(function f(data) {
+    doHistory = true;
+    SolomonService("history-text-" + imgCondition.name).getAll(function f(data) {
       data.forEach(function f(obj, i, arr) {
         loadFeedbacks(obj.myVals);
       });

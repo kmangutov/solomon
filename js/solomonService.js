@@ -12,12 +12,12 @@ function getUrlVars() {
 
 var SolomonService = function(type) {
 
-  var session = "history-" + type + "-v3";
+  var session = "" + type + "-v4";
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
-  var b = "mon/collections/sess";
-  var c = "ion-" + session + "?ap";
+  var b = "mon/collections/prod";
+  var c = "-" + session + "?ap";
   var ca = "iKey=iILS";
   var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
 

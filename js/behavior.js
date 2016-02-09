@@ -2,7 +2,20 @@
 
 var canvasWidth = 450;
 var circleRadius = 10;
-var imgUrl = "imgs/illini_dance.jpg";//"https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"; //"http://i.imgur.com/9mwuTql.jpg"
+//var imgUrl = "imgs/illini_dance.jpg";//"https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"; //"http://i.imgur.com/9mwuTql.jpg"
+
+var imgCondition;
+if(Math.random() >= 0.5) {
+  imgCondition = {
+    imgUrl: "imgs/image-a.jpg",
+    name: "a"
+  };
+} else {
+  imgCondition = {
+    imgUrl: "imgs/image-b.jpg",
+    name: "b"
+  };
+}
 
 var canvasHandle;
 var context2d;
@@ -29,6 +42,8 @@ var tempFeedback = {id: -1};
 
 var floatingInput;
 var floatingDisplay;
+
+var doHistory = false;
 
 var dist = function(x1, y1, x2, y2) {
   return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
@@ -204,7 +219,7 @@ var onSubmit = function(evt) {
 
   var data = [
     {
-      design: imgUrl, 
+      imgCondition: imgCondition, 
       code: code,
       elapsedTime: ActionStack.elapsedTime(),
       submitTime: submitTime,
@@ -213,7 +228,14 @@ var onSubmit = function(evt) {
       stack: ActionStack.getActionStack(),
     }];
 
-  SolomonService("2d").postOne(JSON.stringify(data));
+  var sessionName;
+  if(doHistory) {
+    sessionName = "history-2d-" + imgCondition.name;
+  } else {
+    sessionName = "nohistory-2d-" + imgCondition.name;
+  }
+
+  SolomonService(sessionName).postOne(JSON.stringify(data));
 }
 
 var designHandle = document.getElementById("imgDesign");
@@ -256,6 +278,8 @@ $(document).ready(function(){
 
   context2d = canvasHandle.getContext("2d");
 
+  $('#imgDesign').attr('src', imgCondition.imgUrl);
+
   $("#imgDesign").imagesLoaded(function() {
     onResize();
   });
@@ -291,7 +315,8 @@ $(document).ready(function(){
   var history = getUrlVars()["history"];
 
   if(history === "true") {
-    SolomonService("2d").getAll(function f(data) {
+    doHistory = true;
+    SolomonService("history-2d-" + imgCondition.name).getAll(function f(data) {
       data.forEach(function f(obj, i, arr) {
         loadFeedbacks(obj.myVals);
       });
