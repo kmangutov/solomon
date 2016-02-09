@@ -1,46 +1,39 @@
   
 var arrayFeedbacks = [];
+var showStack = [];
+var snapshots = [];
 
-var comments = [
-  "I like the design.  I think it is creative and edgy.  It looks like it would be advertising ballroom dancing which is what the descriptions says.  So, I would say the poster is right on.  If anything, maybe add more color.",
-  "I think the design is alright but would work much better if the background was purple and the figures and word \"dance\" were black.  The poster is easy to read and clearly states the dates, times, and locations.  I would print the poster.",
-  "I like the color scheme, but I think the advertisement would be more effective if it featured a real dancing couple instead of a clip art image. Real photos grab my attention more.",
-  "I think you should state what kind of dancing will be in this event. And perhaps what to wear. I would also change the design of the purple character, it looks a bit off against the black backround. I would probably put a real live dancing even photo on the backround of this poster and change the font of the words on this poster.",
-  "I think the purple really pops and makes you look at the poster. I found myself looking for a price. Maybe the cost, if there is one could be listed in small print on the bottom left corner. I liked the font but wondered if there is a font that \"flows\" kind of like dance? This font is bold, which stands out well, but I wondered if there would be a bold font that represented dance more. I like the poster though!"    
-];
-
-var names = [
-  "Julien",
-  "Territory_Studio",
-  "Moniker_SF",
-  "Sam",
-  "Yukai"
-];
+var timeZero = new Date().getTime() / 1000;
+var timeMs = function() {
+  return (new Date().getTime() / 1000 - timeZero).toFixed(2);
+}
 
 var subsentence = function(string, word_count) {
   return string.split(" ").slice(0, word_count).join(" ");
 }  
 
-var init = function() {
-  for(var i = 0; i < 5; i++) {
-    //$("#identity" + i).text("@" + names[i] + "");
-    $("#comment" + i).text(subsentence(comments[i], 10) + "...");
-  }
-}
-
 var bind = function() {
   $("[id^=action]").click(function(evt) {
     var id = this.id.slice(-1);
     var state = $("#show_more_" + id).val();
-    console.log("state: " + state + " == 0?" + (state == "0"));
+    console.log("state of id " + id + ": " + state + " == 0?" + (state == "0"));
+    
     if($("#show_more_" + id).val() == "0") {
-      $("#comment" + id).text(comments[id]);
+      //show more
+
+      $("#comment" + id).text(arrayFeedbacks[id].val);
       $("#action" + id).text(" Show less");
       $("#show_more_" + id).val("1");
+
+      showStack[id].show.push(timeMs());
     } else {
-      $("#comment" + id).text(subsentence(comments[id], 10) + "...");
+      //show less
+
+      $("#comment" + id).text(subsentence(arrayFeedbacks[id].val, 7) + "...");
       $("#action" + id).text(" Show more");
       $("#show_more_" + id).val("0");
+
+      showStack[id].hide.push(timeMs());
     }
   });
  
@@ -54,17 +47,49 @@ var bind = function() {
 }
 
 var generateCode = function() {
-
   return (Math.random() * 1000000 + "").substring(0, 4);
 }
 
+var finished = false;
 var finish = function(code) {
 
   $("#submit").text("Thanks! Your code is: " + code);
-  $("#submit").prop('disabled', true);
+  $('#submit').addClass("disable-link");
+  finished = true;
+}
+
+var _id = 0;
+var loadFeedbacks = function(val) {
+  console.log("loadFeedbacks: " + JSON.stringify(val));
+
+  val.id = _id++;
+
+  var clone = JSON.parse(JSON.stringify(val));
+  clone.show = [];
+  clone.hide = [];
+  clone.history = [];
+  val.history = [];
+  arrayFeedbacks.push(val);
+  showStack.push(clone);
+
+  insertFeedbackDOM(val);
+}
+
+var insertFeedbackDOM = function(feedback) {
+  //<ol>
+  //<li><div class="comment_block"><a id="identity0">&nbsp;</a><span id="comment0" class="comment">&nbsp;</span><a id="action0"> Show more</a></div></li>
+
+  var subs = subsentence(feedback.val, 7);
+
+  var hidden = "<input type='hidden' id='show_more_" + feedback.id + "' value='0'></input>"
+  var html = "<li><div class='comment_block'><span id='comment" + feedback.id + "' class='comment'>" + subs + "...</span><a id='action" + feedback.id + "'> Show more</a></div></li>" + hidden;
+  $('#ol-comments').append(html);
 }
 
 var onSubmit = function(evt) {
+
+  if(finished)
+    return;
 
   var code = generateCode();
   finish(code);
@@ -78,38 +103,39 @@ var onSubmit = function(evt) {
     {
       submitTime: submitTime,
       code: code,
-      vals: feedback
-    }]));
+      myVals: {val: feedback, history: snapshots},
+      vals: arrayFeedbacks,
+      stack: showStack
+    }]
+  ));
 }
 
 $(document).ready(function(){
 
-  init();
-  bind();
 
-  SolomonService("text").getAll(function f(data) {
-    console.log(JSON.stringify(data));
-  });
 
   var submitHandle = $("#submit");
-  submitHandle.prop('disabled', false);
 
   submitHandle.click(function(evt) {
     onSubmit(evt);
   });
 
+  $("#input-feedback").bind('input propertychange', function() {
+    var val = $("#input-feedback").val();
+    snapshots.push({time: timeMs(), val: val});
+  });
 
   //HISTORY CONTROL
   var history = getUrlVars()["history"];
   if(history === "true") {
-    SolomonService("2d").getAll(function f(data) {
+    SolomonService("text").getAll(function f(data) {
       data.forEach(function f(obj, i, arr) {
         loadFeedbacks(obj.myVals);
       });
+      bind();
     });
   } else {
     $('#history-condition').hide();
   }
-
 
 });
