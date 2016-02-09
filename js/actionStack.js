@@ -41,6 +41,7 @@ var ActionStack = (function() {
     this.action = "finish";
     this.start = timeMs();
     this.stop = this.start;
+    this.id = actionStack.length;
     this.duration = 0;
   }
 
@@ -77,6 +78,7 @@ var ActionStack = (function() {
 
     stopWrite: function(feedback) {
       currentWrite.feedback = feedback;
+      currentWrite.newText = feedback.text;
       currentWrite = applyDuration(currentWrite);
       actionStack.push(currentWrite);
       currentWrite = {};

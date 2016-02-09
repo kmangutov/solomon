@@ -89,12 +89,15 @@ var onLeaveInput = function() {
     tempFeedback.text = val;
 
     console.log("saving " + JSON.stringify(tempFeedback));
-    //arrayFeedbacks.push(tempFeedback);////differentiate myvals and allvals
-    arrayMyFeedbacks.push(tempFeedback);
-    ActionStack.stopWrite(tempFeedback);
 
-    //if(++newFeedbackCount >= 3)
-    //  $("#submit").prop('disabled', false);
+    if(!tempFeedback.placed && tempFeedback.active) {
+      arrayMyFeedbacks.push(tempFeedback);
+      tempFeedback.placed = true;
+    }
+    
+    if(tempFeedback.active) {
+      ActionStack.stopWrite(tempFeedback);
+    }
   }
   
   tempFeedback = {active: false};
@@ -141,6 +144,8 @@ var doMouseDown = function(evt) {
         yFrac: (newY / designHeight).toFixed(2),
         text: "",
         code: 0,
+        placed: false,
+        active: true,
       };
     }
    

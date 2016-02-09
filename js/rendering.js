@@ -1,6 +1,6 @@
 var renderKnob = function(context2d, feedback, designWidth, designHeight, hoverId, highlightCode) {
     
-    if('active' in feedback)
+    if(!feedback.active)//'active' in feedback)
         return;
 
     hoverId = hoverId || 0;
