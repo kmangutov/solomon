@@ -9,6 +9,9 @@ var context2d;
 
 var arrayFeedbacks = [];
 var arrayMyFeedbacks = [];
+var getLandscape = function() {
+  return arrayFeedbacks.concat(arrayMyFeedbacks);
+}
 
 var canvasOffsetX = 0;
 var canvasOffsetY = 0;
@@ -34,10 +37,10 @@ var dist = function(x1, y1, x2, y2) {
 var checkMouseOver = function(loc) {
 
   var returnFeedback = {};
-
   var anyShown = false;
-  for(var i in arrayFeedbacks) {
-    var feedback = arrayFeedbacks[i];
+
+  //render hovered feedback contents
+  getLandscape().forEach(function(feedback) {
     if(dist(loc.x, 
             loc.y, 
             feedback.xFrac * designWidth, 
@@ -59,8 +62,9 @@ var checkMouseOver = function(loc) {
       highlightCode = feedback.code;
       anyShown = true;
     }
-  }
+  });
 
+  //claear hover
   if(!anyShown) {
 
     //we are not hovering over anything
@@ -85,7 +89,7 @@ var onLeaveInput = function() {
     tempFeedback.text = val;
 
     console.log("saving " + JSON.stringify(tempFeedback));
-    arrayFeedbacks.push(tempFeedback);////
+    //arrayFeedbacks.push(tempFeedback);////differentiate myvals and allvals
     arrayMyFeedbacks.push(tempFeedback);
     ActionStack.stopWrite(tempFeedback);
 
@@ -130,7 +134,7 @@ var doMouseDown = function(evt) {
     } else {
 
       tempFeedback = {
-        id: arrayFeedbacks.length + 1,
+        id: arrayFeedbacks.length + arrayMyFeedbacks.length + 1,
         x: newX.toFixed(2),
         y: newY.toFixed(2),
         xFrac: (newX / designWidth).toFixed(2),
@@ -152,11 +156,10 @@ var renderFeedbackVisuals = function() {
   //console.log("::renderFeedbackVisuals");
 
   context2d.clearRect(0, 0, designWidth, designHeight);
-  for(var i in arrayFeedbacks) {
 
-    var feedback = arrayFeedbacks[i];
-    renderKnob(context2d, feedback, designWidth, designHeight, hoverId, highlightCode);  
-  }
+  getLandscape().forEach(function(feedback) {
+    renderKnob(context2d, feedback, designWidth, designHeight, hoverId, highlightCode);
+  });
 
   if(tempFeedback.id != -1)
     renderKnob(context2d, tempFeedback, designWidth, designHeight, hoverId, highlightCode);//
