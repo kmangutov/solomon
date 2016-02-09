@@ -166,28 +166,26 @@ var generateCode = function() {
   return (Math.random() * 1000000 + "").substring(0, 4);
 }
 
+
+var finished = false;
 var finish = function(code) {
   $("#submit").text("Thanks! Your code is: " + code);
-  $("#submit").prop('disabled', true);
+
+  $('#submit').addClass("disable-link");
+  finished = true;
+
 }
 
 var onSubmit = function(evt) {
 
-  var session = "history-2d-v3";
-
-  // collecting design feedback pls no hack
-  var a = "https://api.mon";
-  var aa = "golab.com/api/1/databases/solo";
-  var b = "mon/collections/sess";
-  var c = "ion-" + session + "?ap";
-  var ca = "iKey=iILS";
-  var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
+  if(finished) return;
 
   var code = generateCode();
   finish(code);
 
   var submitTime = new Date().getTime();
 
+  //insert codes
   ActionStack.finish();
   arrayFeedbacks.forEach(function(val, i, arr) {
     arr[i].code = code;
@@ -196,7 +194,6 @@ var onSubmit = function(evt) {
     arr[i].code = code;
   });
 
-  //SolomonService("2d").
   var data = [
     {
       design: imgUrl, 
@@ -209,26 +206,6 @@ var onSubmit = function(evt) {
     }];
 
   SolomonService("2d").postOne(JSON.stringify(data));
-
-  /*$.ajax( { url: a + aa + b + c + ca + d,
-      data: JSON.stringify([
-        {
-          design: imgUrl, 
-          code: code,
-          elapsedTime: ActionStack.elapsedTime(),
-          submitTime: submitTime,
-          vals: arrayFeedbacks,
-          stack: ActionStack.getActionStack(),
-        }]),
-
-      type: "POST",
-      contentType: "application/json" } )
-  .done(function() {
-    //finish(code);
-  })
-  .fail(function() {
-    //finish(code);
-  });*/
 }
 
 var designHandle = document.getElementById("imgDesign");
