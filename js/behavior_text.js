@@ -134,7 +134,7 @@ var onSubmit = function(evt) {
 }
 
 $(document).ready(function(){
-
+  $('#if-feedback').hide();
 
 
   var submitHandle = $("#submit");
@@ -156,6 +156,7 @@ $(document).ready(function(){
     doHistory = true;
     SolomonService("history-text-" + imgCondition.name).getAll(function f(data) {
       data.forEach(function f(obj, i, arr) {
+        $('#if-feedback').show();
         loadFeedbacks(obj.myVals);
       });
       bind();
