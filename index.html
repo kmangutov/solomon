@@ -48,6 +48,7 @@ Kirill Mangutov (manguto2@illinois.edu), University of Illinois at Urbana Champa
 </div>
 
 
+<script src="./js/config-user.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 
@@ -66,6 +67,10 @@ $(document).ready(function(){
 
   var submitHandle = $("#submit");
   submitHandle.prop('href', urls[randomInt(0,3)]);
+
+  if(!_SHOW_DISCLAIMER) {
+    $('.div-context').hide();
+  }
 
 });
 

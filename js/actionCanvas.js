@@ -3,7 +3,7 @@ var ActionCanvas = (function(){
   console.log("ActionCanvas.js");
   this.that = this;
 
-  this.canvasHandle;
+  this.actionCanvasHandle;
   this.ctx;
 
   var canvasWidth;
@@ -24,12 +24,12 @@ var ActionCanvas = (function(){
   this.detail = new FloatingInput("floating-admin");
 
   var init = function(id) {
-    this.canvasHandle = $(id);
+    this.actionCanvasHandle = $(id);
     var that = this;
-    this.canvasHandle.mousemove(function(evt) {
+    this.actionCanvasHandle.mousemove(function(evt) {
       
-      var relX = evt.pageX - canvasHandle.position().left;
-      var relY = evt.pageY - canvasHandle.position().top;
+      var relX = evt.pageX - actionCanvasHandle.position().left;
+      var relY = evt.pageY - actionCanvasHandle.position().top;
 
       var session = relY / SESSION_HEIGHT;
       var top = Math.round(session) == parseInt(session);
@@ -59,10 +59,10 @@ var ActionCanvas = (function(){
       }
     });
 
-    this.canvasHandle.mouseenter(function(){that.detail.show();}); 
-    this.canvasHandle.mouseleave(function(){that.detail.hide();}); 
+    this.actionCanvasHandle.mouseenter(function(){that.detail.show();}); 
+    this.actionCanvasHandle.mouseleave(function(){that.detail.hide();}); 
 
-    this.ctx = canvasHandle[0].getContext('2d');
+    this.ctx = actionCanvasHandle[0].getContext('2d');
   }
 
   var setData = function(data) {
@@ -76,8 +76,8 @@ var ActionCanvas = (function(){
   var onMouseMove = function(evt) {
     console.log("ActionCanvas::onMouseMove " + x + ", " + y);
 
-    var relX = evt.pageX - canvasHandle.position().left;
-    var relY = evt.pageY - canvasHandle.position().top;
+    var relX = evt.pageX - actionCanvasHandle.position().left;
+    var relY = evt.pageY - actionCanvasHandle.position().top;
 
     var session = relX / SESSION_HEIGHT;
     var top = Math.round(session) == parseInt(session);

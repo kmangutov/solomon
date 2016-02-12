@@ -1,12 +1,15 @@
 var renderKnob = function(context2d, feedback, designWidth, designHeight, hoverId, highlightCode) {
     
-    if(!feedback.active)//'active' in feedback)
+    if(!feedback.active && !_ADMIN_MODE)//'active' in feedback)
         return;
 
     hoverId = hoverId || 0;
 
     //console.log("render " + JSON.stringify(feedback));
     var target = (hoverId == feedback.id && highlightCode == feedback.code);
+    var target = target || (_ADMIN_MODE && highlightCode == feedback.code);
+
+
     var radius = circleRadius;
     if(target) {
         radius *= 1.8;
@@ -15,9 +18,7 @@ var renderKnob = function(context2d, feedback, designWidth, designHeight, hoverI
     var x = feedback.xFrac * designWidth;
     var y = feedback.yFrac * designHeight;
 
-    //console.log("X:" + x + " xFrac: " + feedback.xFrac + ", width: " + designWidth);
-    //console.log("Y:" + y + " yFrac: " + feedback.yFrac + ", height: " + designHeight);
-
+    
     context2d.fillStyle = "#FFF";
     context2d.strokeStyle = "#555";
     context2d.lineWidth = 2;

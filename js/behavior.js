@@ -5,7 +5,7 @@ var circleRadius = 10;
 //var imgUrl = "imgs/illini_dance.jpg";//"https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"; //"http://i.imgur.com/9mwuTql.jpg"
 
 var imgCondition;
-if(Math.random() >= 0.5) {
+if(Math.random() >= 0.5 || _ADMIN_MODE) {
   imgCondition = {
     imgUrl: "imgs/image-a.jpg",
     name: "a"
@@ -17,7 +17,7 @@ if(Math.random() >= 0.5) {
   };
 }
 
-var canvasHandle;
+//var canvasHandle;
 var context2d;
 
 var arrayFeedbacks = [];
@@ -239,11 +239,12 @@ var onSubmit = function(evt) {
 }
 
 var designHandle = document.getElementById("imgDesign");
-var canvasHandle = document.getElementById("canvas");
+var canvasHandle = document.getElementById("hover-canvas");
+var adminActionsCanvasHandle = document.getElementById("admin-actions-canvas");
 var floatingDivHandle = document.getElementById("floatingDiv");
 
 var onResize = function() {
-  var canvasHandle = document.getElementById("canvas");
+  //var canvasHandle = document.getElementById("canvas");
   context2d = canvasHandle.getContext("2d");
 
   var designHandle = document.getElementById("imgDesign");
@@ -276,7 +277,8 @@ $(document).ready(function(){
   var submitHandle = $("#submit");
   submitHandle.prop('disabled', false);
 
-  context2d = canvasHandle.getContext("2d");
+  console.log(JSON.stringify(canvasHandle));
+  //context2d = canvasHandle.getContext("2d");
 
   $('#imgDesign').attr('src', imgCondition.imgUrl);
 
@@ -292,7 +294,7 @@ $(document).ready(function(){
     onSubmit(evt);
   });
 
-  canvas.addEventListener("mousemove", function(evt) {
+  canvasHandle.addEventListener("mousemove", function(evt) {
 
     var offset = $(this).offset();
 
