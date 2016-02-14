@@ -11,6 +11,8 @@ body {
 
 #floatingContainer {
   position: relative;
+  //width: 800 !important;
+  //height: 600 !important;
 }
 
 .title {
@@ -24,6 +26,10 @@ body {
   right: 0px;
   bottom: 0px;
   z-index: 1000;
+}
+
+.imgDesign {
+
 }
 
 #canvas {

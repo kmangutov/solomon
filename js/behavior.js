@@ -254,6 +254,7 @@ var onResize = function() {
   designHeight = designHandle.height;
   canvasHandle.width = designWidth;
   canvasHandle.height = designHeight;
+
   renderFeedbackVisuals();
 }
 
