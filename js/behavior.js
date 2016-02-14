@@ -4,17 +4,25 @@ var canvasWidth = 450;
 var circleRadius = 10;
 //var imgUrl = "imgs/illini_dance.jpg";//"https://m2.behance.net/rendition/pm/23685659/max_1200/be1c0f3d2bfb8c5f414129e768bf8b64.jpg"; //"http://i.imgur.com/9mwuTql.jpg"
 
-var imgCondition;
-if(Math.random() >= 0.5 || _ADMIN_MODE) {
+
+var design = getUrlVars()["design"];
+
+
+if(design === "a") {
   imgCondition = {
     imgUrl: "imgs/image-a.jpg",
     name: "a"
   };
-} else {
+} else if(design === "b"){
   imgCondition = {
-    imgUrl: "imgs/image-b.jpg",
+    imgUrl: "imgs/image-b.png",
     name: "b"
   };
+} else if(design === "c") {
+  imgCondition = {
+    imgUrl: "imgs/image-c.png",
+    name: "c"
+  }; 
 }
 
 //var canvasHandle;
