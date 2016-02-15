@@ -256,6 +256,11 @@ var loadFeedbacks = function(feedbacks) {
 }
 
 $(document).ready(function(){
+
+
+
+  _incrementGlobalCounter();
+  
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
   

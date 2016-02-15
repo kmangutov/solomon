@@ -134,6 +134,9 @@ $(document).ready(function(){
   $('#if-feedback').hide();
 
 
+  
+  _incrementGlobalCounter();
+
   var submitHandle = $("#submit");
 
   $('#imgDesign').attr('src', imgCondition.imgUrl);
