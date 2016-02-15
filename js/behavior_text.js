@@ -1,6 +1,7 @@
   
 var arrayFeedbacks = [];
 var showStack = [];
+var timing = {};
 var snapshots = [];
 
 var doHistory = false;
@@ -28,6 +29,7 @@ var bind = function() {
       $("#show_more_" + id).val("1");
 
       showStack[id].show.push(timeMs());
+      timing[id] = timeMs();
     } else {
       //show less
 
@@ -36,6 +38,10 @@ var bind = function() {
       $("#show_more_" + id).val("0");
 
       showStack[id].hide.push(timeMs());
+      var duration = timeMs() - timing[id];
+
+      if(duration > showStack[id].duration) 
+        showStack[id].duration = duration;
     }
   });
  
@@ -71,6 +77,7 @@ var loadFeedbacks = function(val) {
   clone.hide = [];
   clone.history = [];
   val.history = [];
+  clone.duration = 0;
   arrayFeedbacks.push(val);
   showStack.push(clone);
 
@@ -110,7 +117,7 @@ var onSubmit = function(evt) {
 
   SolomonService(sessionName).postOne(JSON.stringify([
     {
-      imgCondition: imgCondition,
+      imgCondition: imgCondition.name,
       submitTime: submitTime,
       code: code,
       myVals: {val: feedback, history: snapshots},

@@ -204,7 +204,7 @@ var onSubmit = function(evt) {
 
   var data = [
     {
-      imgCondition: imgCondition, 
+      imgCondition: imgCondition.name, 
       code: code,
       elapsedTime: ActionStack.elapsedTime(),
       submitTime: submitTime,
