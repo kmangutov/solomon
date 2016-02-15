@@ -16,7 +16,7 @@ var SolomonService = function(type) {
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
-  var b = "mon-real/collections/a-prod";
+  var b = "mon-real/collections/prod";
   var c = "-" + session + "?ap";
   var ca = "iKey=iILS";
   var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
