@@ -266,7 +266,7 @@ $(document).ready(function(){
   $('#design-description').text(imgCondition.description);
 
   console.log(JSON.stringify(canvasHandle));
-  //context2d = canvasHandle.getContext("2d");
+  context2d = canvasHandle.getContext("2d");
 
   $('#imgDesign').attr('src', imgCondition.imgUrl);
 
