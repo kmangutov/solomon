@@ -32,7 +32,7 @@ body {
 
 }
 
-#canvas {
+#hover-canvas {
   /*cursor: pointer;*/
   cursor: url('/imgs/cursor.png'), pointer;
 }
