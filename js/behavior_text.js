@@ -15,6 +15,7 @@ var subsentence = function(string, word_count) {
   return string.split(" ").slice(0, word_count).join(" ");
 }  
 
+var defaultDuration = 99999;
 var bind = function() {
   $("[id^=action]").click(function(evt) {
     var id = this.id.slice(-1);
@@ -30,6 +31,7 @@ var bind = function() {
 
       showStack[id].show.push(timeMs());
       timing[id] = timeMs();
+      showStack[id].duration = defaultDuration;
     } else {
       //show less
 
@@ -40,7 +42,8 @@ var bind = function() {
       showStack[id].hide.push(timeMs());
       var duration = timeMs() - timing[id];
 
-      if(duration > showStack[id].duration) 
+
+      if(duration > showStack[id].duration || showStack[id].duration == defaultDuration) 
         showStack[id].duration = duration;
     }
   });
@@ -112,7 +115,7 @@ var onSubmit = function(evt) {
   if(doHistory) {
     sessionName = "history-text-" + imgCondition.name;
   } else {
-    sessionName = "nohistory-text" + imgCondition.name;
+    sessionName = "nohistory-text-" + imgCondition.name;
   }
 
   SolomonService(sessionName).postOne(JSON.stringify([
@@ -143,7 +146,7 @@ $(document).ready(function(){
 
   $("#input-feedback").bind('input propertychange', function() {
     var val = $("#input-feedback").val();
-    //snapshots.push({time: timeMs(), val: val});
+    snapshots.push({time: timeMs(), val: val});
   });
 
   //HISTORY CONTROL
