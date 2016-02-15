@@ -146,7 +146,7 @@ $(document).ready(function(){
 
   $("#input-feedback").bind('input propertychange', function() {
     var val = $("#input-feedback").val();
-    snapshots.push({time: timeMs(), val: val});
+    //snapshots.push({time: timeMs(), val: val});
   });
 
   //HISTORY CONTROL
