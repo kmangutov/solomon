@@ -20,7 +20,9 @@
   <div class="small-12 centered columns">
       <div class="div-context">
         <center><span class="r-title">Informed Consent</span></center>
+        <b>You must be 18 or older to participate.</b><br>
         <span class="r-heading">Description</span>
+
         <p class="r-subtitle">We are conducting a research study about survey formats for collecting feedback. All data collected in this study will be used for research purposes only. You will examine some designs and other information and provide a critique and any suggestions for improvement. Participation should take only a few minutes.</p>
         <span class="r-heading">Risks and Benefits</span>
         <p class="r-subtitle">The risks of participation are no greater than those associated with everyday life. The benefit is helping to contribute knowledge about feedback quality.</p>
@@ -28,11 +30,20 @@
         <p class="r-subtitle">You will be compensated $0.35 for your participation in this HIT.</p>
         <span class="r-heading">Confidentiality</span>
         <p class="r-subtitle">Your Mechanical Turk Worker ID will be used to distribute payment to you but will not be stored with your survey responses. We will not access any personally identifying information that you may have put on your Amazon profile page. Any reports and presentations about the findings from this study will not include any personally identifying information and will only be reported in aggregate form.</p>
+        <span class="r-heading">Will my study-related information be kept confidential?</span>
+        <p class="r-subtitle">Yes, but not always. In general, we will not tell anyone any information about you. When this research is discussed or published, no one will know that you were in the study.  However, laws and university rules might require us to disclose information about you.  For example, if required by laws or University Policy, study information may be seen or copied by the following people or groups:  
+        <ul>
+          <li>The university committee and office that reviews and approves research studies, the Institutional Review Board (IRB) and Office for Protection of Research Subjects;</li>
+          <li>University and state auditors, and Departments of the university responsible for oversight of research;</li>
+        </ul></p>
+
         <span class="r-heading">Subject's Rights</span>
         <p class="r-subtitle">Your participation is voluntary.  You may stop participating at any time by closing the browser window or the program to withdraw from the study. Partial data will not be analyzed.</p>
         <span class="r-heading">Contact</span>
         <p class="r-subtitle">For additional questions about this research, you may contact:
-Kirill Mangutov (manguto2@illinois.edu), University of Illinois at Urbana Champaign
+        <ul><li>Kirill Mangutov (manguto2@illinois.edu), University of Illinois at Urbana Champaign</li>
+        <li>Dr. Bailey, Brian (bpbailey@illinois.edu), Responsible Project Investigator, University of Illinois at Urbana Champaign</li></ul>
+        If you have any questions about your rights as a participant in this study or any concerns or complaints, please contact the University of Illinois Institutional Review Board at 217-333-2670 or via email at irb@illinois.edu.
 </p>
       </div>
   </div>
@@ -41,7 +52,7 @@ Kirill Mangutov (manguto2@illinois.edu), University of Illinois at Urbana Champa
   <div class="small-12 columns">
     <center>
 
-    <a href="modality-2d.html" class="button" id="submit">I'm ready</a> 
+    <a href="#" class="button" id="submit">Loading...</a> 
   
     </center>
   </div>
@@ -57,23 +68,45 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var ht = "history=true";
+var hf = "history=false";
+
+var da = "design=a";
+var db = "design=b";
+var dc = "design=c";
+
+var ma = "modality-2d.html";
+var mb = "modality-text.html";
+
 var urls = [
-  "modality-2d.html",
-  "modality-2d.html?history=true",
-  "modality-text.html",
-  "modality-text.html?history=true"
+  ma + "?" + ht + "&" + da,
+  ma + "?" + ht + "&" + db,
+  ma + "?" + ht + "&" + dc,
+  ma + "?" + hf + "&" + da,
+  ma + "?" + hf + "&" + db,
+  ma + "?" + hf + "&" + dc,
+
+  mb + "?" + ht + "&" + da,
+  mb + "?" + ht + "&" + db,
+  mb + "?" + ht + "&" + dc,
+  mb + "?" + hf + "&" + da,
+  mb + "?" + hf + "&" + db,
+  mb + "?" + hf + "&" + dc,
 ];
 
-$(document).ready(function(){
+_getGlobalCounter(function(gc) {
+  $(document).ready(function() {
 
-  var submitHandle = $("#submit");
-  submitHandle.prop('href', urls[randomInt(0,3)]);
+    var submitHandle = $("#submit");
+    submitHandle.prop('href', urls[gc % urls.length]);
+    submitHandle.text("I'm ready");
 
-  if(!_SHOW_DISCLAIMER) {
-    $('.div-context').hide();
-  }
-
+    /*if(!_SHOW_DISCLAIMER) {
+      $('.div-context').hide();
+    }*/
+  });
 });
+
 
 </script>
 

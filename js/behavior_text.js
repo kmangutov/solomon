@@ -5,17 +5,24 @@ var snapshots = [];
 
 var doHistory = false;
 
-var imgCondition;
-if(Math.random() >= 0.5) {
+var design = getUrlVars()["design"];
+
+
+if(design === "a") {
   imgCondition = {
     imgUrl: "imgs/image-a.jpg",
     name: "a"
   };
-} else {
+} else if(design === "b"){
   imgCondition = {
-    imgUrl: "imgs/image-b.jpg",
+    imgUrl: "imgs/image-b.png",
     name: "b"
   };
+} else if(design === "c") {
+  imgCondition = {
+    imgUrl: "imgs/image-c.png",
+    name: "c"
+  }; 
 }
 
 var timeZero = new Date().getTime() / 1000;
