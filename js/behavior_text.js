@@ -5,26 +5,6 @@ var snapshots = [];
 
 var doHistory = false;
 
-var design = getUrlVars()["design"];
-
-
-if(design === "a") {
-  imgCondition = {
-    imgUrl: "imgs/image-a.jpg",
-    name: "a"
-  };
-} else if(design === "b"){
-  imgCondition = {
-    imgUrl: "imgs/image-b.png",
-    name: "b"
-  };
-} else if(design === "c") {
-  imgCondition = {
-    imgUrl: "imgs/image-c.png",
-    name: "c"
-  }; 
-}
-
 var timeZero = new Date().getTime() / 1000;
 var timeMs = function() {
   return (new Date().getTime() / 1000 - timeZero).toFixed(2);
@@ -148,13 +128,15 @@ $(document).ready(function(){
 
   $('#imgDesign').attr('src', imgCondition.imgUrl);
 
+  $('#design-description').text(imgCondition.description);
+
   submitHandle.click(function(evt) {
     onSubmit(evt);
   });
 
   $("#input-feedback").bind('input propertychange', function() {
     var val = $("#input-feedback").val();
-    snapshots.push({time: timeMs(), val: val});
+    //snapshots.push({time: timeMs(), val: val});
   });
 
   //HISTORY CONTROL
