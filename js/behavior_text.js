@@ -18,7 +18,8 @@ var subsentence = function(string, word_count) {
 var defaultDuration = 99999;
 var bind = function() {
   $("[id^=action]").click(function(evt) {
-    var id = this.id.slice(-1);
+    console.log("id beore slice: " + this.id);
+    var id = this.id.replace("action", "");//this.id.slice(-1);
     var state = $("#show_more_" + id).val();
     console.log("state of id " + id + ": " + state + " == 0?" + (state == "0"));
     
