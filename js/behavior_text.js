@@ -134,8 +134,8 @@ $(document).ready(function(){
   $('#if-feedback').hide();
 
 
-  
-  _incrementGlobalCounter();
+
+  //_incrementGlobalCounter();
 
   var submitHandle = $("#submit");
 

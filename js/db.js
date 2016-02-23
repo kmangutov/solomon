@@ -10,28 +10,32 @@ var dbGet = function(session, f) {
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
-  var b = "mon/collections/sess";
-  var c = "ion-" + session + "?ap";
+  var b = "mon-real2/collections/" + session + "?ap";
   var ca = "iKey=iILS";
   var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
 
-
-  $.get(a + aa + b + c + ca + d, function(data) {
+  var url = a + aa + b + ca + d;
+  console.log("url: " + url);
+  $.get(a + aa + b + ca + d, function(data) {
     var obj = {
 
+
       getIds: function() {
+        console.log("db::getIds data " + JSON.stringify(data));
         var ids = [];
         for(var i = 0; i < data.length; i++) {
           row = data[i];
           ids.push(row["code"]);
         }
+        console.log("db::getIds " + JSON.stringify(ids));
         return ids;
       },
 
       dataFor: function(id) {
-        console.log("::dataFor " + id);
+        console.log("db::dataFor " + id);
         for(var i = 0; i < data.length; i++) {
           if(id === data[i]["code"]) {
+            console.log("db::dataFor " + JSON.stringify(data[i]));
             return data[i];
           }
         }
@@ -70,7 +74,7 @@ var dbGet = function(session, f) {
           var stacks = [];
           $(elem + " option:selected").each(function() {
             var code = $(this).text();
-            var vals = that.dataFor(code).vals;
+            var vals = that.dataFor(code).myVals;
             var stack = that.dataFor(code).stack;
 
             for(var i in vals) {
@@ -98,7 +102,8 @@ var dbGet = function(session, f) {
 
 $(document).ready(function(){
 
-  dbGet("initial-v1-no-history", function(obj) {
+  //dbGet("initial-v1-no-history", function(obj) {
+  dbGet("prod-v5-nohistory-2d-c", function(obj) {
     $.each(obj.getIds(), function(key, val) {
       $("#admin-select")
         .append($("<option></option>")
@@ -117,7 +122,7 @@ $(document).ready(function(){
   });
 
 
-  dbGet("history-v1", function(obj) {
+  dbGet("prod-v5-history-2d-c", function(obj) {
     $.each(obj.getIds(), function(key, val) {
       $("#admin-select-history")
         .append($("<option></option>")

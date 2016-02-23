@@ -259,8 +259,8 @@ $(document).ready(function(){
 
 
 
-  _incrementGlobalCounter();
-  
+  //_incrementGlobalCounter();
+
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
   
@@ -268,7 +268,8 @@ $(document).ready(function(){
   var submitHandle = $("#submit");
   submitHandle.prop('disabled', false);
 
-  $('#design-description').text(imgCondition.description);
+  if(_ADMIN_MODE)
+    $('#design-description').text(imgCondition.description);
 
   console.log(JSON.stringify(canvasHandle));
   context2d = canvasHandle.getContext("2d");
