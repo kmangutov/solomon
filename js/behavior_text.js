@@ -12,6 +12,7 @@ var timeMs = function() {
 }
 
 var subsentence = function(string, word_count) {
+  console.log(JSON.stringify(string));
   return string.split(" ").slice(0, word_count).join(" ");
 }  
 
@@ -92,6 +93,7 @@ var insertFeedbackDOM = function(feedback) {
   //<ol>
   //<li><div class="comment_block"><a id="identity0">&nbsp;</a><span id="comment0" class="comment">&nbsp;</span><a id="action0"> Show more</a></div></li>
 
+  console.log("::insertFeedbackDOM " + JSON.stringify(feedback));
   var subs = subsentence(feedback.val, 7);
 
   var hidden = "<input type='hidden' id='show_more_" + feedback.id + "' value='0'></input>"
@@ -123,8 +125,9 @@ var onSubmit = function(evt) {
     {
       imgCondition: imgCondition.name,
       submitTime: submitTime,
+      elapsedTime: ActionStack.elapsedTime(),
       code: code,
-      myVals: {val: feedback, history: snapshots},
+      myVals: {val: feedback},
       vals: arrayFeedbacks,
       stack: showStack
     }]
