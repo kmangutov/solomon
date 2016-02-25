@@ -177,11 +177,29 @@ var generateCode = function() {
 
 var finished = false;
 var finish = function(code) {
-  $("#submit").text("Thanks! Your code is: " + code);
-
+  $("#submit").text("Continue");
   $('#submit').addClass("disable-link");
   finished = true;
+}
 
+var postRedirect = function(completeTime, code) {
+  /*var form = document.createElement('form');
+  form.method = 'post';
+  form.action = 'demographics.html'
+
+  var addInput = function(parent, name, value) {
+    var input = document.createElement('input');
+    input.type = "text";
+    input.name = name;
+    input.value = value;
+    parent.appendChild(input);
+  }
+
+  addInput(form, "completionTime", completeTime);
+  addInput(form, "code", code);
+  form.submit();*/
+
+  //http://stackoverflow.com/questions/503093/how-can-i-make-a-page-redirect-using-jquery
 }
 
 var onSubmit = function(evt) {
@@ -189,7 +207,7 @@ var onSubmit = function(evt) {
   if(finished) return;
 
   var code = generateCode();
-  finish(code);
+
 
   var submitTime = new Date().getTime();
 
@@ -202,11 +220,12 @@ var onSubmit = function(evt) {
     arr[i].code = code;
   });
 
+  var eTime = ActionStack.elapsedTime();
   var data = [
     {
       imgCondition: imgCondition.name, 
       code: code,
-      elapsedTime: ActionStack.elapsedTime(),
+      elapsedTime: eTime,
       submitTime: submitTime,
       myVals: arrayMyFeedbacks,
       vals: arrayFeedbacks,
@@ -220,7 +239,9 @@ var onSubmit = function(evt) {
     sessionName = "nohistory-2d-" + imgCondition.name;
   }
 
-  SolomonService(sessionName).postOne(JSON.stringify(data));
+  SolomonService(sessionName).postOne(JSON.stringify(data), function f() {
+    postRedirect(eTime, code);
+  });
 }
 
 var designHandle = document.getElementById("imgDesign");

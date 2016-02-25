@@ -12,11 +12,11 @@ function getUrlVars() {
 
 var SolomonService = function(type) {
 
-  var session = "v5-" + type + "";
+  var session = "v6-" + type + "";
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
-  var b = "mon-real2/collections/prod";
+  var b = "mon-real3/collections/prod";
   var c = "-" + session + "?ap";
   var ca = "iKey=iILS";
   var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
@@ -31,7 +31,7 @@ var SolomonService = function(type) {
       });
     },
 
-    postOne: function(data) {
+    postOne: function(data, f) {
       console.log("SolomonService::postOne " + data);
       $.ajax( { url: a + aa + b + c + ca + d,
         data: data,
@@ -39,9 +39,11 @@ var SolomonService = function(type) {
         contentType: "application/json" })
       .done(function() {
         console.log("SolomonService::postOne done")
+        f();
       })
       .fail(function(e) {
         console.log("SolomonService::postOne fail: " + e);
+        alert("Problem: " + JSON.stringify(e));
       });
     }
 
