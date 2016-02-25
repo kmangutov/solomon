@@ -65,6 +65,10 @@ button {
   margin: 0px !important;
 }
 
+.table-likert {
+  max-width: 300px;
+}
+
 /*img {
   max-width: none !important;
   min-width: 100% !important;

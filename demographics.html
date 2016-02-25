@@ -1,0 +1,127 @@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<!--<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/redpen.css">
+
+<body>
+
+
+
+<div class="row">
+
+  <div class="small-12 small-centered columns">
+    <div class="spacer">&nbsp;</div>
+  </div>
+
+  <div class="small-12 centered columns">
+      <div class="div-context">
+        <center><span class="r-title">Demographics</span></center>
+
+        <p class="r-subtitle">Please enter your age:</p>
+        <input type="radio" name="age" value="18-24"> 18-24<br>
+        <input type="radio" name="age" value="25-35"> 25-34<br>
+        <input type="radio" name="age" value="35-44"> 35-44<br>
+        <input type="radio" name="age" value="45-54"> 45-54<br>
+        <input type="radio" name="age" value="55"> 55 or older<br>
+
+        <br>
+
+        <p class="r-subtitle">Please select the gender you identify with:</p>
+        <input type="radio" name="gender" value="Male"> Male<br>
+        <input type="radio" name="gender" value="Female"> Female<br>
+        <input type="radio" name="gender" value="Other"> Other<br>  
+
+        
+        <br>
+
+
+        <p class="r-subtitle">Please rate your design expertise (1: novice, 5: expert):</p>
+        <table class="table-likert">
+          <tr>
+            <td><input type="radio" name="expertise" value="1"></td>
+            <td><input type="radio" name="expertise" value="1"></td>
+            <td><input type="radio" name="expertise" value="1"></td>
+            <td><input type="radio" name="expertise" value="1"></td>
+            <td><input type="radio" name="expertise" value="1"></td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+        </table>
+
+
+        <br>
+
+
+
+        <p class="r-subtitle">How much effort do you think this task required? (1: low effort, 5: high effort)</p>
+        <table class="table-likert">
+          <tr>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+        </table>
+
+
+        <br>
+
+
+        <p class="r-subtitle">Please rate how useful you think the creator of the design will find your feedback. (1: not useful, 5: very useful)</p>
+        <table class="table-likert">
+          <tr>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+            <td><input type="radio" name="effort" value="1"></td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+        </table>
+
+
+
+       
+      </div>
+  </div>
+
+
+  <div class="small-12 columns">
+    <center>
+
+      <a href="#" class="button" id="submit">Loading...</a> 
+  
+    </center>
+  </div>
+</div>
+
+<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+<script src="./js/global-counter.js"></script>
+<script src="./js/config-user.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+
+
+</body>

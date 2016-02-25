@@ -32,6 +32,8 @@ body {
 }
 
 .r-subtitle {
+  padding-bottom: 0px;
+  margin-bottom: 10px;
   padding-top: 1px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16.5px !important;
