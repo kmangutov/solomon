@@ -183,23 +183,8 @@ var finish = function(code) {
 }
 
 var postRedirect = function(completeTime, code) {
-  /*var form = document.createElement('form');
-  form.method = 'post';
-  form.action = 'demographics.html'
 
-  var addInput = function(parent, name, value) {
-    var input = document.createElement('input');
-    input.type = "text";
-    input.name = name;
-    input.value = value;
-    parent.appendChild(input);
-  }
-
-  addInput(form, "completionTime", completeTime);
-  addInput(form, "code", code);
-  form.submit();*/
-
-  //http://stackoverflow.com/questions/503093/how-can-i-make-a-page-redirect-using-jquery
+  window.location.replace("demographics.html?ctime=" + completeTime + "&code=" + code);
 }
 
 var onSubmit = function(evt) {
@@ -240,7 +225,7 @@ var onSubmit = function(evt) {
   }
 
   SolomonService(sessionName).postOne(JSON.stringify(data), function f() {
-    postRedirect(eTime, code);
+    postRedirect(submitTime, code);
   });
 }
 

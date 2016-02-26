@@ -42,7 +42,7 @@ var SolomonService = function(type) {
         f();
       })
       .fail(function(e) {
-        console.log("SolomonService::postOne fail: " + e);
+        console.log("SolomonService::postOne fail: " + JSON.stringify(e));
         alert("Problem: " + JSON.stringify(e));
       });
     }

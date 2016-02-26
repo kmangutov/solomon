@@ -19,6 +19,10 @@ body {
   margin: 40px;
 }
 
+.div-radio {
+  padding: 5px !important;
+}
+
 .floatingDiv {
   position: absolute;
   left: 0px;

@@ -64,12 +64,6 @@ var generateCode = function() {
 }
 
 var finished = false;
-var finish = function(code) {
-
-  $("#submit").text("Thanks! Your code is: " + code);
-  $('#submit').addClass("disable-link");
-  finished = true;
-}
 
 var _id = 0;
 var loadFeedbacks = function(val) {
@@ -101,14 +95,20 @@ var insertFeedbackDOM = function(feedback) {
   $('#ol-comments').append(html);
 }
 
+var postRedirect = function(completeTime, code) {
+
+  window.location.replace("demographics.html?ctime=" + completeTime + "&code=" + code);
+}
+
+
 var onSubmit = function(evt) {
 
   if(finished)
     return;
+  finished = true;
 
   var code = generateCode();
-  finish(code);
-
+  
   var feedback = $("#input-feedback").val();
   console.log("onSubmit " + feedback);
 
@@ -131,7 +131,9 @@ var onSubmit = function(evt) {
       vals: arrayFeedbacks,
       stack: showStack
     }]
-  ));
+  ), function() {
+    postRedirect(submitTime, code);
+  });
 }
 
 $(document).ready(function(){

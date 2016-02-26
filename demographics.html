@@ -23,18 +23,18 @@
         <br><b>Responses to these questions will not affect payment.</b><br>
 
         <p class="r-subtitle">Please enter your age:</p>
-        <input type="radio" name="age" value="18-24"> 18-24<br>
-        <input type="radio" name="age" value="25-35"> 25-34<br>
-        <input type="radio" name="age" value="35-44"> 35-44<br>
-        <input type="radio" name="age" value="45-54"> 45-54<br>
-        <input type="radio" name="age" value="55"> 55 or older<br>
+        <input type="radio" name="age" value="18-24" id="a1"><label for="a1"> 18-24</label><br>
+        <input type="radio" name="age" value="25-35" id="a2"><label for="a2"> 25-34</label><br>
+        <input type="radio" name="age" value="35-44" id="a3"><label for="a3"> 35-44</label><br>
+        <input type="radio" name="age" value="45-54" id="a4"><label for="a4"> 45-54</label><br>
+        <input type="radio" name="age" value="55" id="a5"><label for="a5"> 55 or older</label><br>
 
         <br>
 
         <p class="r-subtitle">Please select the gender you identify with:</p>
-        <input type="radio" name="gender" value="Male"> Male<br>
-        <input type="radio" name="gender" value="Female"> Female<br>
-        <input type="radio" name="gender" value="Other"> Other<br>  
+        <input type="radio" name="gender" value="Male" id="g1"><label for="g1"> Male</label><br>
+        <input type="radio" name="gender" value="Female" id="g2"><label for="g2"> Female</label><br>
+        <input type="radio" name="gender" value="Other" id="g3"><label for="g3"> Other</label><br>  
 
         
         <br>
@@ -43,11 +43,11 @@
         <p class="r-subtitle">Please rate your design expertise (1: novice, 5: expert):</p>
         <table class="table-likert">
           <tr>
-            <td><input type="radio" name="expertise" value="1"></td>
-            <td><input type="radio" name="expertise" value="1"></td>
-            <td><input type="radio" name="expertise" value="1"></td>
-            <td><input type="radio" name="expertise" value="1"></td>
-            <td><input type="radio" name="expertise" value="1"></td>
+            <td><label><div class="div-radio"><input type="radio" name="expertise" value="1"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="expertise" value="2"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="expertise" value="3"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="expertise" value="4"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="expertise" value="5"></div></label></td>
           </tr>
           <tr>
             <td>1</td>
@@ -66,11 +66,11 @@
         <p class="r-subtitle">How much effort do you think this task required? (1: low effort, 5: high effort)</p>
         <table class="table-likert">
           <tr>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
+            <td><label><div class="div-radio"><input type="radio" name="effort" value="1"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="effort" value="2"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="effort" value="3"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="effort" value="4"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="effort" value="5"></div></label></td>
           </tr>
           <tr>
             <td>1</td>
@@ -88,11 +88,11 @@
         <p class="r-subtitle">Please rate how useful you think the creator of the design will find your feedback. (1: not useful, 5: very useful)</p>
         <table class="table-likert">
           <tr>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
-            <td><input type="radio" name="effort" value="1"></td>
+            <td><label><div class="div-radio"><input type="radio" name="usefulness" value="1"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="usefulness" value="2"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="usefulness" value="3"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="usefulness" value="4"></div></label></td>
+            <td><label><div class="div-radio"><input type="radio" name="usefulness" value="5"></div></label></td>
           </tr>
           <tr>
             <td>1</td>
@@ -114,7 +114,7 @@
   <div class="small-12 columns">
     <center>
 
-      <a href="#" class="button" id="submit">Loading...</a> 
+      <a class="button" id="submit">Submit</a> 
       <br><br><br>
 
     </center>
@@ -122,9 +122,11 @@
 </div>
 
 <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+<script src="./js/solomonService.js"></script>
 <script src="./js/global-counter.js"></script>
 <script src="./js/config-user.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="./js/behavior_demographics.js"></script>
 
 
 
