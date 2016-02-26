@@ -265,7 +265,7 @@ $(document).ready(function(){
 
 
 
-  //_incrementGlobalCounter();
+  _incrementGlobalCounter();
 
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
