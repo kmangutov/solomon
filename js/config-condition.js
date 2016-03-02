@@ -11,7 +11,7 @@ if(design === "a") {
   imgCondition = {
     imgUrl: "imgs/image-b.png",
     name: "b",
-    description: "This is a website advertising a community college. The target is audience current and future students."
+    description: "This is a website advertising a community college. The target audience is current and future students."
   };
 } else if(design === "c") {
   imgCondition = {

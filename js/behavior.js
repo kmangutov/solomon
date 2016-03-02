@@ -191,6 +191,7 @@ var onSubmit = function(evt) {
 
   if(finished) return;
 
+  onLeaveInput();
   var code = generateCode();
 
 
@@ -274,8 +275,7 @@ $(document).ready(function(){
   var submitHandle = $("#submit");
   submitHandle.prop('disabled', false);
 
-  if(_ADMIN_MODE)
-    $('#design-description').text(imgCondition.description);
+  $('#design-description').text(imgCondition.description);
 
   console.log(JSON.stringify(canvasHandle));
   context2d = canvasHandle.getContext("2d");
