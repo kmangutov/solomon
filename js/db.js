@@ -10,7 +10,7 @@ var dbGet = function(session, f) {
 
   var a = "https://api.mon";
   var aa = "golab.com/api/1/databases/solo";
-  var b = "mon-real2/collections/" + session + "?ap";
+  var b = "mon-real3/collections/" + session + "?ap";
   var ca = "iKey=iILS";
   var d = "3iwLqva8cQ7P0hEfeCI0JouzGX7-";
 
@@ -103,7 +103,7 @@ var dbGet = function(session, f) {
 $(document).ready(function(){
 
   //dbGet("initial-v1-no-history", function(obj) {
-  dbGet("prod-v5-nohistory-2d-c", function(obj) {
+  dbGet("prod-v6-nohistory-2d-" + getUrlVars()["design"], function(obj) {
     $.each(obj.getIds(), function(key, val) {
       $("#admin-select")
         .append($("<option></option>")
@@ -122,7 +122,7 @@ $(document).ready(function(){
   });
 
 
-  dbGet("prod-v5-history-2d-c", function(obj) {
+  dbGet("prod-v6-history-2d-" + getUrlVars()["design"], function(obj) {
     $.each(obj.getIds(), function(key, val) {
       $("#admin-select-history")
         .append($("<option></option>")

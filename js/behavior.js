@@ -266,7 +266,7 @@ $(document).ready(function(){
 
 
 
-  _incrementGlobalCounter();
+  //_incrementGlobalCounter();
 
   floatingInput = new FloatingInput("floating-input");
   floatingDisplay = new FloatingInput("floating-display");
@@ -280,6 +280,7 @@ $(document).ready(function(){
   console.log(JSON.stringify(canvasHandle));
   context2d = canvasHandle.getContext("2d");
 
+  console.log("IMGCONDITION URL " + imgCondition.imgUrl);
   $('#imgDesign').attr('src', imgCondition.imgUrl);
 
   $("#imgDesign").imagesLoaded(function() {
