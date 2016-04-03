@@ -101,13 +101,11 @@ var postRedirect = function(completeTime, code) {
 }
 
 
-var onSubmit = function(evt) {
+var onSubmit = function(code) {
 
   if(finished)
     return;
   finished = true;
-
-  var code = generateCode();
 
   var feedback = $("#input-feedback").val();
   console.log("onSubmit " + feedback);
@@ -150,8 +148,11 @@ $(document).ready(function(){
   $('#design-description').text(imgCondition.description);
 
   submitHandle.click(function(evt) {
-    onSubmit(evt);
+    _incrementGlobalCounter(function(gc) {
+      onSubmit(gc);
+    });
   });
+
 
   $("#input-feedback").bind('input propertychange', function() {
     var val = $("#input-feedback").val();

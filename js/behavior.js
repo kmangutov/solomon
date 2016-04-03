@@ -177,7 +177,7 @@ var generateCode = function() {
 
 var finished = false;
 var finish = function(code) {
-  $("#submit").text("Continue");
+  //$("#submit").text("Continue");
   $('#submit').addClass("disable-link");
   finished = true;
 }
@@ -187,13 +187,12 @@ var postRedirect = function(completeTime, code) {
   window.location.replace("demographics.html?ctime=" + completeTime + "&code=" + code);
 }
 
-var onSubmit = function(evt) {
+var onSubmit = function(code) {
 
   if(finished) return;
+  finish();
 
   onLeaveInput();
-  var code = generateCode();
-
 
   var submitTime = new Date().getTime();
 
@@ -292,7 +291,9 @@ $(document).ready(function(){
   });
 
   submitHandle.click(function(evt) {
-    onSubmit(evt);
+    _incrementGlobalCounter(function(gc) {
+      onSubmit(gc);
+    });
   });
 
   canvasHandle.addEventListener("mousemove", function(evt) {

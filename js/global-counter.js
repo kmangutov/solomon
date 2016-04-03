@@ -11,13 +11,14 @@ var _getGlobalCounter = function(f) {
   });
 };
 
-var _incrementGlobalCounter = function() {
+var _incrementGlobalCounter = function(f) {
  globalCounterNode.once("value", function(ticker) {
 
     var gc = ticker.val();
 
     globalCounterNode.set(gc + 1, function(error) {
       if(error) console.log("error: " + error);
+      f(gc);
     });
   });
 }
