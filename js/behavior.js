@@ -34,6 +34,11 @@ var dist = function(x1, y1, x2, y2) {
   return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
 };
 
+var hoverTimeoutEnabled = false;
+var hoverTimeoutTarget = -1;
+var hoverTimeout;
+var hoverShown = false;
+
 var checkMouseOver = function(loc) {
 
   var returnFeedback = {};
@@ -51,22 +56,45 @@ var checkMouseOver = function(loc) {
 
         //we are hovering a new one not an old one
         hoverId = feedback.id;
-        ActionStack.startHover(feedback);
       }
 
       //Set the return feedback
       returnFeedback = feedback; 
-
-      //update ui
-      floatingDisplay.load(feedback);
-      highlightCode = feedback.code;
       anyShown = true;
+
     }
   });
 
-  //claear hover
-  if(!anyShown) {
+  //clear timeout
+  if(hoverTimeoutEnabled && (hoverTimeoutTarget != hoverId || !anyShown)) {
+    console.log("CLEAR TIMEOUT");
+    clearTimeout(hoverTimeout);
+    hoverTimeoutEnabled = false;
+    hoverTimeoutTarget = -1;
+  } 
 
+  //enable timeout
+  if(!hoverTimeoutEnabled && anyShown) {
+    console.log("ENABLE TIMEOUT");
+
+    hoverTimeoutEnabled = true;
+    hoverTimeoutTarget = hoverId;
+
+    hoverTimeout = setTimeout(function() {
+      console.log("TIMEOUT TRIGGERED");
+      ActionStack.startHover(returnFeedback);
+      floatingDisplay.load(returnFeedback);
+      highlightCode = returnFeedback.code;
+
+      hoverShown = true;
+      renderFeedbackVisuals();
+
+    }, 500);
+  }
+
+  //claear hover
+  if(!anyShown && hoverShown) {
+    console.log("CLEAR HOVER");
     //we are not hovering over anything
     hoverId = -1;
     if(highlightCode != -1) {
@@ -75,6 +103,7 @@ var checkMouseOver = function(loc) {
     }
 
     floatingDisplay.hide();
+    hoverShown = false;
   }
 
   renderFeedbackVisuals();
